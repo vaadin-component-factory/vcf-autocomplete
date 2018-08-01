@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0.0",
+  "namespaces": [
+    {
+      "name": "Vaadin",
+      "description": "",
+      "summary": "",
+      "sourceRange": {
+        "file": "src/vaadin-autocomplete.html",
+        "start": {
+          "line": 44,
+          "column": 6
+        },
+        "end": {
+          "line": 44,
+          "column": 60
+        }
+      },
+      "elements": [
+        {
+          "description": "`<vaadin-autocomplete>` is a template for incubator components.\n\n```\n<vaadin-autocomplete>\n</vaadin-autocomplete>\n```",
+          "summary": "",
+          "path": "src/vaadin-autocomplete.html",
+          "properties": [],
+          "methods": [],
+          "staticMethods": [],
+          "demos": [
+            {
+              "url": "demo/index.html",
+              "description": ""
+            }
+          ],
+          "metadata": {},
+          "sourceRange": {
+            "start": {
+              "line": 33,
+              "column": 6
+            },
+            "end": {
+              "line": 37,
+              "column": 7
+            }
+          },
+          "privacy": "public",
+          "superclass": "HTMLElement",
+          "name": "Vaadin.VaadinAutocomplete",
+          "attributes": [],
+          "events": [],
+          "styling": {
+            "cssVariables": [],
+            "selectors": []
+          },
+          "slots": [],
+          "tagname": "vaadin-autocomplete"
+        }
+      ]
+    }
+  ]
+}

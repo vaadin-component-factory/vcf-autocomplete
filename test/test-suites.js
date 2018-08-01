@@ -1,0 +1,3 @@
+window.VaadinAutocompleteSuites = [
+  'sample.html',
+];
