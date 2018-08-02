@@ -14,8 +14,16 @@ This program is available under Apache License Version 2.0, available at https:/
         align-items: flex-start;
         justify-content: flex-start;
         right: auto;
+        position: absolute;
         bottom: auto;
         background: #fff;
+      }
+
+      [part="overlay"] {
+        background-color: var(--lumo-base-color);
+        background-image: linear-gradient(var(--lumo-tint-5pct), var(--lumo-tint-5pct));
+        border-radius: var(--lumo-border-radius);
+        box-shadow: 0 0 0 1px var(--lumo-shade-5pct), var(--lumo-box-shadow-m);
       }
     </style>
   </template>

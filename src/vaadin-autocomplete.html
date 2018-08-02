@@ -9,9 +9,12 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
 <link rel="import" href="../../polymer/polymer-element.html">
 <link rel="import" href="../../vaadin-themable-mixin/vaadin-themable-mixin.html">
 <link rel="import" href="../../vaadin-element-mixin/vaadin-element-mixin.html">
+<link rel="import" href="../../iron-resizable-behavior/iron-resizable-behavior.html">
 <link rel="import" href="../../vaadin-text-field/vaadin-text-field.html">
 <link rel="import" href="../../vaadin-list-box/vaadin-list-box.html">
 <link rel="import" href="../../vaadin-item/vaadin-item.html">
+<link rel="import" href="../../vaadin-button/vaadin-button.html">
+<link rel="import" href="../../vaadin-icons/vaadin-icons.html">
 <link rel="import" href="vaadin-autocomplete-overlay.html">
 
 <dom-module id="vaadin-autocomplete">
@@ -21,21 +24,64 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         display: inline-block;
       }
 
+      :host([options-shown]) {
+        pointer-events: auto;
+      }
+
       vaadin-list-box {
-        width: var(--list-box-width);
+        min-width: var(--vaadin-autocomplete-options-width);
+        --_lumo-item-selected-icon-display: none;
+      }
+
+      vaadin-item {
+        padding-left: calc(0.375em + var(--lumo-border-radius) / 4 - 1px + 0.25em);
+      }
+
+      vaadin-item ::slotted(div) {
+        display: flex;
+      }
+
+      vaadin-button {
+        --lumo-button-size: 15px;
+        --lumo-icon-size-m: 19px;
+      }
+
+      [part="no-results"] {
+        width: var(--vaadin-autocomplete-options-width);
+        padding: 0.5em calc(0.375em + var(--lumo-border-radius) / 4 - 1px + 0.25em);
+        box-sizing: border-box;
+      }
+
+      [part="bold"] {
+        font-weight: bold;
       }
     </style>
 
-    <vaadin-text-field on-focus="_setOpened">
+    <vaadin-text-field value="{{value}}" on-focus="_textFieldFocused">
+      <template is="dom-if" if="[[_hasValue(value)]]">
+        <vaadin-button theme="icon tertiary small" aria-label="Add new item" slot="suffix" on-click="clear">
+          <iron-icon icon="vaadin:close"></iron-icon>
+        </vaadin-button>
+      </template>
     </vaadin-text-field>
 
-    <vaadin-autocomplete-overlay opened="{{opened}}">
+    <vaadin-autocomplete-overlay opened="{{optionsShown}}">
       <template>
-        <vaadin-list-box>
-          <vaadin-item>Text 1</vaadin-item>
-          <vaadin-item>Text 2</vaadin-item>
-          <vaadin-item>Text 3</vaadin-item>
-        </vaadin-list-box>
+        <template is="dom-if" if="[[_limitedOptions.length]]">
+          <vaadin-list-box>
+            <template is="dom-repeat" items="[[_limitedOptions]]" as="option">
+              <vaadin-item on-click="_applyOption">
+                [[_getInputtedPart(value, option)]]<span part="bold">[[_getSuggestedPart(value, option)]]</span>
+              </vaadin-item>
+            </template>
+          </vaadin-list-box>
+        </template>
+
+        <template is="dom-if" if="[[!_limitedOptions.length]]">
+          <div part="no-results">
+            No results
+          </div>
+        </template>
       </template>
     </vaadin-autocomplete-overlay>
 
@@ -54,7 +100,10 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
        * @memberof Vaadin
        * @demo demo/index.html
        */
-      class VaadinAutocomplete extends Vaadin.ElementMixin(Vaadin.ThemableMixin(Polymer.Element)) {
+      class VaadinAutocomplete extends Vaadin.ElementMixin(
+        Vaadin.ThemableMixin(
+          Polymer.mixinBehaviors(Polymer.IronResizableBehavior, Polymer.Element))) {
+
         static get is() {
           return 'vaadin-autocomplete';
         }
@@ -62,36 +111,134 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         static get properties() {
           return {
             _overlayElement: Object,
+            _textFieldElement: Object,
 
-            opened: {
+            optionsShown: {
               type: Boolean,
+              reflectToAttribute: true,
               value: false
+            },
+
+            value: {
+              type: String,
+              notify: true,
+              observer: '_valueChange'
+            },
+
+            options: {
+              type: Array,
+              value: () => [],
+              observer: '_optionsChange'
+            },
+
+            limit: {
+              type: Number,
+              value: 10
+            },
+
+            _limitedOptions: {
+              type: Array
             }
           };
+        }
+
+        constructor() {
+          super();
+          this._boundSetOverlayPosition = this._setOverlayPosition.bind(this);
+          this._boundHideOptions = this.hideOptions();
+        }
+
+        connectedCallback() {
+          super.connectedCallback();
+
+          this.addEventListener('iron-resize', this._boundSetOverlayPosition);
+          window.addEventListener('click', this._boundHideOptions);
+          this.addEventListener('click', this._elementClickListener);
         }
 
         ready() {
           super.ready();
 
           this._overlayElement = this.shadowRoot.querySelector('vaadin-autocomplete-overlay');
+          this._textFieldElement = this.shadowRoot.querySelector('vaadin-text-field');
+
+          this._overlayElement.addEventListener('vaadin-overlay-outside-click', (ev) => ev.preventDefault());
         }
 
-        _setPosition() {
+        disconnectedCallback() {
+          super.disconnectedCallback();
+
+          this.removeEventListener('iron-resize', this._boundSetOverlayPosition);
+          window.removeEventListener('click');
+          this.removeEventListener('click', this._elementClickListener);
+
+          this.hideOptions();
+        }
+
+        _elementClickListener(event) {
+          event.stopPropagation();
+        }
+
+        _setOverlayPosition() {
           const inputRect = this.getBoundingClientRect();
 
           this._overlayElement.style.left = inputRect.left + 'px';
           this._overlayElement.style.top = inputRect.bottom + 'px';
 
-          this._overlayElement.updateStyles({'--list-box-width': inputRect.width + 'px'});
+          this._overlayElement.updateStyles({'--vaadin-autocomplete-options-width': inputRect.width + 'px'});
         }
 
-        _setOpened() {
-          this._setPosition();
-          this.opened = true;
+        showOptions() {
+          this._setOverlayPosition();
+          this.optionsShown = true;
         }
 
-        _setClosed() {
-          this.opened = false;
+        hideOptions() {
+          this.optionsShown = false;
+        }
+
+        _valueChange(value) {
+          if (value.length > 0 && !this.optionsShown) {
+            this.showOptions();
+          } else if (value.length == 0 && this.optionsShown) {
+            this.hideOptions();
+          }
+        }
+
+        _applyOption(ev) {
+          this.dispatchEvent(new CustomEvent('vaadin-autocomplete-option-chosen', {
+            bubbles: true
+          }));
+
+          this.value = ev.model.option;
+          this.hideOptions();
+        }
+
+        _textFieldFocused() {
+          if (this.value.length > 0) {
+            this.showOptions();
+          }
+        }
+
+        _hasValue(value) {
+          return value.length > 0;
+        }
+
+        _optionsChange(options) {
+          this._limitedOptions = options.slice(0, this.limit);
+        }
+
+        clear() {
+          this.value = '';
+          this._textFieldElement.focus();
+        }
+
+        _getInputtedPart(value, option) {
+          return option.substr(0, value.length);
+        }
+
+        _getSuggestedPart(value, option) {
+          return option.substr(value.length, option.length);
         }
       }
 
