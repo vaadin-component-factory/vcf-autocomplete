@@ -9,13 +9,36 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
 <link rel="import" href="../../polymer/polymer-element.html">
 <link rel="import" href="../../vaadin-themable-mixin/vaadin-themable-mixin.html">
 <link rel="import" href="../../vaadin-element-mixin/vaadin-element-mixin.html">
+<link rel="import" href="../../vaadin-text-field/vaadin-text-field.html">
+<link rel="import" href="../../vaadin-list-box/vaadin-list-box.html">
+<link rel="import" href="../../vaadin-item/vaadin-item.html">
+<link rel="import" href="vaadin-autocomplete-overlay.html">
 
 <dom-module id="vaadin-autocomplete">
   <template>
     <style>
+      :host {
+        display: inline-block;
+      }
+
+      vaadin-list-box {
+        width: var(--list-box-width);
+      }
     </style>
 
-    <h1>Hello world</h1>
+    <vaadin-text-field on-focus="_setOpened">
+    </vaadin-text-field>
+
+    <vaadin-autocomplete-overlay opened="{{opened}}">
+      <template>
+        <vaadin-list-box>
+          <vaadin-item>Text 1</vaadin-item>
+          <vaadin-item>Text 2</vaadin-item>
+          <vaadin-item>Text 3</vaadin-item>
+        </vaadin-list-box>
+      </template>
+    </vaadin-autocomplete-overlay>
+
   </template>
 
   <script>
@@ -34,6 +57,41 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
       class VaadinAutocomplete extends Vaadin.ElementMixin(Vaadin.ThemableMixin(Polymer.Element)) {
         static get is() {
           return 'vaadin-autocomplete';
+        }
+
+        static get properties() {
+          return {
+            _overlayElement: Object,
+
+            opened: {
+              type: Boolean,
+              value: false
+            }
+          };
+        }
+
+        ready() {
+          super.ready();
+
+          this._overlayElement = this.shadowRoot.querySelector('vaadin-autocomplete-overlay');
+        }
+
+        _setPosition() {
+          const inputRect = this.getBoundingClientRect();
+
+          this._overlayElement.style.left = inputRect.left + 'px';
+          this._overlayElement.style.top = inputRect.bottom + 'px';
+
+          this._overlayElement.updateStyles({'--list-box-width': inputRect.width + 'px'});
+        }
+
+        _setOpened() {
+          this._setPosition();
+          this.opened = true;
+        }
+
+        _setClosed() {
+          this.opened = false;
         }
       }
 
