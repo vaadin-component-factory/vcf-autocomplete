@@ -29,7 +29,12 @@
     "vaadin-license-checker": "vaadin/license-checker#^2.0.1",
     "vaadin-lumo-styles": "vaadin/vaadin-lumo-styles#^1.0.0",
     "vaadin-dialog": "vaadin/vaadin-dialog#^2.0.2",
-    "vaadin-button": "vaadin/vaadin-button#^2.0.1"
+    "vaadin-button": "^2.0.1",
+    "vaadin-text-field": "^2.0.1",
+    "vaadin-overlay": "^3.0.3",
+    "vaadin-list-box": "^1.0.2",
+    "vaadin-icons": "^4.1.4",
+    "iron-resizable-behavior": "^2.1.1"
   },
   "devDependencies": {
     "iron-component-page": "^3.0.0",

@@ -9,8 +9,38 @@
     <h3>Demo sample</h3>
     <vaadin-demo-snippet id="vaadin-autocomplete-demo-sample">
       <template preserve-content>
-        <vaadin-autocomplete>
+        <vaadin-autocomplete id="demo1">
         </vaadin-autocomplete>
+        <script>
+          function getData(callback) {
+            var xhr = new XMLHttpRequest();
+            xhr.onload = function() {
+              callback(JSON.parse(xhr.responseText));
+            };
+
+
+            var url = 'https://demo.vaadin.com/demo-data/1.0/countries';
+
+            xhr.open('GET', url, true);
+
+            xhr.send();
+          }
+
+          window.addDemoReadyListener('#vaadin-autocomplete-demo-sample', function(document) {
+            const autocompleteElement = document.querySelector('#demo1');
+            let countries = [];
+
+            getData((result) => {
+              countries = result;
+            });
+
+            autocompleteElement.addEventListener('value-changed', (ev) => {
+              if (countries.length) {
+                autocompleteElement.options = countries.filter(country => country.toLowerCase().startsWith(ev.detail.value.toLowerCase()));
+              }
+            });
+          });
+        </script>
       </template>
     </vaadin-demo-snippet>
 
