@@ -11,13 +11,19 @@
       <template preserve-content>
         <vaadin-autocomplete id="demo1">
         </vaadin-autocomplete>
+
+        <div>
+          Last applied value:
+          <span id="lastAppliedValue">
+            None
+          </span>
+        </div>
         <script>
           function getData(callback) {
             var xhr = new XMLHttpRequest();
             xhr.onload = function() {
               callback(JSON.parse(xhr.responseText));
             };
-
 
             var url = 'https://demo.vaadin.com/demo-data/1.0/countries';
 
@@ -38,6 +44,10 @@
               if (countries.length) {
                 autocompleteElement.options = countries.filter(country => country.toLowerCase().startsWith(ev.detail.value.toLowerCase()));
               }
+            });
+
+            autocompleteElement.addEventListener('vaadin-autocomplete-value-applied', (ev) => {
+              document.getElementById('lastAppliedValue').textContent = ev.detail.value;
             });
           });
         </script>
