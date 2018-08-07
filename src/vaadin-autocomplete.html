@@ -76,7 +76,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
 
           <template is="dom-repeat" items="[[_limitedOptions]]" as="option">
             <vaadin-item
-              on-click="_applyOption"
+              on-click="_optionClicked"
               part="option">
               [[_getInputtedPart(value, option)]]<span part="bold">[[_getSuggestedPart(value, option)]]</span>
             </vaadin-item>
@@ -236,13 +236,21 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           }
         }
 
-        _applyOption(ev) {
-          this.dispatchEvent(new CustomEvent('vaadin-autocomplete-option-chosen', {
-            bubbles: true
+        _optionClicked(ev) {
+          this._applyValue(ev.model.option);
+        }
+
+        _applyValue(value) {
+          this.dispatchEvent(new CustomEvent('vaadin-autocomplete-value-applied', {
+            bubbles: true,
+            detail: {
+              value: value
+            }
           }));
 
-          this._applyValue(ev.model.option);
+          this._changeTextFieldValue(value);
           this.hideOptions();
+          this.$.textField.blur();
         }
 
         _textFieldFocused() {
@@ -260,7 +268,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         }
 
         clear() {
-          this._applyValue('');
+          this._changeTextFieldValue('');
           this._textFieldElement.focus();
         }
 
@@ -273,14 +281,25 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         }
 
         _onKeyDown(event) {
-          if (event.key === 'ArrowDown') {
-            event.preventDefault();
+          switch (event.key) {
+            case 'ArrowDown':
+              event.preventDefault();
+              this._navigate('next');
 
-            this._navigate('next');
-          } else if (event.key === 'ArrowUp') {
-            event.preventDefault();
+              break;
+            case 'ArrowUp':
+              event.preventDefault();
+              this._navigate('prev');
 
-            this._navigate('prev');
+              break;
+            case 'Enter':
+              if (this._selectedOption) {
+                this._applyValue(this._selectedOption.value);
+              } else {
+                this._applyValue(this.$.textField.value);
+              }
+
+              break;
           }
         }
 
@@ -341,8 +360,8 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           this.$.textField.value = selectedOption.value;
         }
 
-        _applyValue(value) {
-          this.$.textField.value = value;
+        _changeTextFieldValue(newValue) {
+          this.$.textField.value = newValue;
           this.$.textField.dispatchEvent(new Event('input', {
             bubbles: true,
             cancelable: true
