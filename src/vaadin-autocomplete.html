@@ -53,7 +53,11 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
       }
     </style>
 
-    <vaadin-text-field id="textField" on-focus="_textFieldFocused">
+    <vaadin-text-field
+      id="textField"
+      on-focus="_textFieldFocused"
+      label="[[label]]"
+      placeholder="[[placeholder]]">
       <template is="dom-if" if="[[_hasValue(value)]]">
         <vaadin-button
           part="clear"
@@ -119,15 +123,6 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
 
         static get properties() {
           return {
-            _overlayElement: Object,
-            _textFieldElement: Object,
-            _optionsContainer: Object,
-            _selectedOption: Object,
-
-            _savedValue: {
-              type: String
-            },
-
             optionsShown: {
               type: Boolean,
               reflectToAttribute: true,
@@ -151,9 +146,28 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
               value: 10
             },
 
+            label: {
+              type: String
+            },
+
+            placeholder: {
+              type: String
+            },
+
             _limitedOptions: {
               type: Array
-            }
+            },
+
+            _savedValue: {
+              type: String
+            },
+
+            _overlayElement: Object,
+            _textFieldElement: Object,
+            _optionsContainer: Object,
+            _selectedOption: Object,
+            _boundHideOptions: Object,
+            _boundSetOverlayPosition: Object,
           };
         }
 
