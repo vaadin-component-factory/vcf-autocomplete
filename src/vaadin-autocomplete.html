@@ -360,9 +360,13 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           if (nextIndex >= 0) {
             items[nextIndex]._setFocused(true);
             this._selectedOption = items[nextIndex];
+
+            return this._selectedOption.value;
           // or restore the saved value
           } else {
             this.$.textField.value = this._savedValue;
+
+            return this._savedValue;
           }
         }
 

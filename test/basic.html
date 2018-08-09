@@ -1,0 +1,225 @@
+<!doctype html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>vaadin-autocomplete tests</title>
+  <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../../test-fixture/test-fixture.html">
+  <link rel="import" href="../vaadin-autocomplete.html">
+</head>
+
+<body>
+  <test-fixture id="default">
+    <template>
+      <vaadin-autocomplete></vaadin-autocomplete>
+    </template>
+  </test-fixture>
+
+  <script>
+    describe('VaadinAutocomplete test', () => {
+      let autocompleteElement;
+
+      beforeEach(() => {
+        autocompleteElement = fixture('default');
+      });
+
+      describe('_setOverlayPosition', () => {
+        it('should have the proper overlay position and width', () => {
+          sinon.stub(autocompleteElement, 'getBoundingClientRect').returns({
+            left: 10,
+            bottom: 20,
+            width: 100
+          });
+
+          autocompleteElement._setOverlayPosition();
+
+          expect(autocompleteElement._overlayElement.style.left).to.be.eq('10px');
+          expect(autocompleteElement._overlayElement.style.top).to.be.eq('20px');
+          expect(
+            getComputedStyle(autocompleteElement._overlayElement)
+              .getPropertyValue('--vaadin-autocomplete-options-width')
+          ).to.be.eq('100px');
+        });
+      });
+
+      describe('showOptions', () => {
+        it('should set the overlay position and show the overlay', () => {
+          sinon.stub(autocompleteElement, '_setOverlayPosition');
+
+          autocompleteElement.showOptions();
+          expect(autocompleteElement.optionsShown).to.be.true;
+          expect(autocompleteElement._setOverlayPosition.calledOnce).to.be.true;
+        });
+      });
+
+      describe('hideOptions', () => {
+        it('should hide the overlay', () => {
+          autocompleteElement.showOptions();
+          autocompleteElement.hideOptions();
+          expect(autocompleteElement.optionsShown).to.be.false;
+        });
+      });
+
+      describe('_valueChange', () => {
+        it('should blur a selected option', () => {
+          autocompleteElement._selectedOption = {};
+          const setFocused = autocompleteElement._selectedOption._setFocused = sinon.stub();
+
+          autocompleteElement._valueChange('test');
+
+          expect(autocompleteElement._selectedOption).to.be.null;
+          expect(setFocused.calledOnce).to.be.true;
+          expect(setFocused.getCall(0).args[0]).to.be.false;
+        });
+
+        it('should show options if the user inputs something', () => {
+          sinon.stub(autocompleteElement, 'showOptions');
+          autocompleteElement._valueChange('abc');
+
+          expect(autocompleteElement.showOptions.calledOnce).to.be.true;
+        });
+
+        it('should hide options if the user erases the text input value', () => {
+          sinon.stub(autocompleteElement, 'hideOptions');
+          sinon.stub(autocompleteElement, 'showOptions', () => {
+            autocompleteElement.optionsShown = true;
+          });
+          autocompleteElement._valueChange('abc');
+          autocompleteElement._valueChange('');
+
+          expect(autocompleteElement.hideOptions.calledOnce).to.be.true;
+        });
+
+        it('should trigger showOptions once', () => {
+          sinon.stub(autocompleteElement, 'showOptions', () => {
+            autocompleteElement.optionsShown = true;
+          });
+
+          autocompleteElement._valueChange('abc');
+          autocompleteElement._valueChange('def');
+
+          expect(autocompleteElement.showOptions.calledOnce).to.be.true;
+        });
+
+        it('should trigger hideOptions once', () => {
+          sinon.stub(autocompleteElement, 'showOptions', () => {
+            autocompleteElement.optionsShown = true;
+          });
+
+          sinon.stub(autocompleteElement, 'hideOptions', () => {
+            autocompleteElement.optionsShown = false;
+          });
+
+          autocompleteElement._valueChange('abc');
+          autocompleteElement._valueChange('');
+          autocompleteElement._valueChange('');
+
+          expect(autocompleteElement.hideOptions.calledOnce).to.be.true;
+        });
+      });
+
+      describe('_optionClicked', () => {
+        it('should apply the proper value', () => {
+          sinon.stub(autocompleteElement, '_applyValue');
+
+          autocompleteElement._optionClicked({
+            model: {
+              option: 'some value'
+            }
+          });
+
+          expect(autocompleteElement._applyValue.calledOnce).to.be.true;
+          expect(autocompleteElement._applyValue.getCall(0).args[0]).to.be.eq('some value');
+        });
+      });
+
+      describe('_applyValue', () => {
+        beforeEach(() => {
+          sinon.stub(autocompleteElement, '_changeTextFieldValue');
+          sinon.stub(autocompleteElement, 'hideOptions');
+        });
+
+        it('should dispatch a vaadin-autocomplete-value-applied event', (done) => {
+          autocompleteElement.addEventListener('vaadin-autocomplete-value-applied', (event) => {
+            expect(event.detail.value).to.be.eq('abc');
+            done();
+          });
+
+          autocompleteElement._applyValue('abc');
+        });
+
+        it('should change the text-field value', () => {
+          autocompleteElement._applyValue('abc');
+
+          expect(autocompleteElement._changeTextFieldValue.calledOnce).to.be.true;
+          expect(autocompleteElement._changeTextFieldValue.getCall(0).args[0]).to.be.eq('abc');
+        });
+
+        it('should hide the overlay', () => {
+          autocompleteElement._applyValue('abc');
+
+          expect(autocompleteElement.hideOptions.calledOnce).to.be.true;
+        });
+
+        it('should blur the text-field', () => {
+          autocompleteElement._textFieldElement.focus();
+
+          expect(document.activeElement).to.be.eq(autocompleteElement);
+          autocompleteElement._applyValue('abc');
+
+          expect(document.activeElement).to.not.be.eq(autocompleteElement);
+        });
+      });
+
+      describe('_getInputtedPart', () => {
+        it('should return the right result', () => {
+          expect(autocompleteElement._getInputtedPart('abc', 'abcdef')).to.be.eq('abc');
+        });
+      });
+
+      describe('_getSuggestedPart', () => {
+        it('should return the right result', () => {
+          expect(autocompleteElement._getSuggestedPart('abc', 'abcdef')).to.be.eq('def');
+        });
+      });
+
+      describe('_navigate', () => {
+        it('should do nothing if no options are provided', (done) => {
+          autocompleteElement.options = [];
+          autocompleteElement.value = 'abc';
+
+          Polymer.RenderStatus.afterNextRender(autocompleteElement, function() {
+            expect(autocompleteElement._navigate('next')).to.be.undefined;
+            done();
+          });
+        });
+
+        it('should select the next option', (done) => {
+          autocompleteElement.options = ['abcdef', 'abcwer'];
+          autocompleteElement.value = 'abc';
+
+          Polymer.RenderStatus.afterNextRender(autocompleteElement, function() {
+            expect(autocompleteElement._navigate('next')).to.be.eq('abcdef');
+            expect(autocompleteElement._navigate('next')).to.be.eq('abcwer');
+            expect(autocompleteElement._navigate('next')).to.be.eq('abc');
+            done();
+          });
+        });
+
+        it('should select the previous option', (done) => {
+          autocompleteElement.options = ['abcdef', 'abcwer'];
+          autocompleteElement.value = 'abc';
+
+          Polymer.RenderStatus.afterNextRender(autocompleteElement, function() {
+            expect(autocompleteElement._navigate('prev')).to.be.eq('abcwer');
+            expect(autocompleteElement._navigate('prev')).to.be.eq('abcdef');
+            expect(autocompleteElement._navigate('prev')).to.be.eq('abc');
+            done();
+          });
+        });
+
+      });
+    });
+  </script>
+</body>
