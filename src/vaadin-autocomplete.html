@@ -40,6 +40,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
       [part="clear"] {
         --lumo-button-size: 15px;
         --lumo-icon-size-m: 19px;
+        color: var(--lumo-contrast-60pct);
       }
 
       [part="no-results"] {
@@ -49,7 +50,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
       }
 
       [part="bold"] {
-        font-weight: bold;
+        font-weight: 600;
       }
     </style>
 
@@ -82,7 +83,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
             <vaadin-item
               on-click="_optionClicked"
               part="option">
-              [[_getInputtedPart(value, option)]]<span part="bold">[[_getSuggestedPart(value, option)]]</span>
+              <span part="bold">[[_getInputtedPart(value, option)]]</span>[[_getSuggestedPart(value, option)]]
             </vaadin-item>
           </template>
 
@@ -312,6 +313,11 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
               } else {
                 this._applyValue(this.$.textField.value);
               }
+
+              break;
+            case 'Escape':
+              this.$.textField.blur();
+              this.hideOptions();
 
               break;
           }
