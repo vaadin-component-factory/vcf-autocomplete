@@ -3,17 +3,10 @@
 
 # &lt;vaadin-autocomplete&gt;
 
-[Live Demo ↗](https://vaadin.com/components/vaadin-autocomplete/html-examples)
-|
-[API documentation ↗](https://vaadin.com/components/vaadin-autocomplete/html-api)
-
-
-[&lt;vaadin-autocomplete&gt;](https://vaadin.com/components/vaadin-autocomplete) is a Web Component providing an easy way to ask the user to confirm a choice, part of the [Vaadin components](https://vaadin.com/components).
+[&lt;vaadin-autocomplete&gt;](https://vaadin.com/components/vaadin-autocomplete) is a text input with a panel of suggested options, part of the [Vaadin components](https://vaadin.com/components).
 
 ```html
-  <vaadin-autocomplete header="Unsaved changes" confirm-text="Save" on-confirm="save"
-    cancel on-cancel="cancel" reject reject-text="Discard" on-reject="discard">
-    Do you want to save or discard your changes before navigating away?
+  <vaadin-autocomplete id="demo1" label="Choose country" placeholder="Start typing a country name..." options="[[options]]">
   </vaadin-autocomplete>
 ```
 
