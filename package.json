@@ -1,25 +1,25 @@
 {
-  "name": "@vaadin/vaadin-autocomplete",
-  "version": "1.0.0-beta2",
-  "description": "vaadin-autocomplete",
-  "main": "vaadin-autocomplete.html",
-  "repository": "vaadin/vaadin-autocomplete",
+  "name": "@vaadin/incubator-autocomplete",
+  "version": "0.1.0",
+  "description": "incubator-autocomplete",
+  "main": "incubator-autocomplete.html",
+  "repository": "vaadin/incubator-autocomplete",
   "keywords": [
     "Vaadin",
-    "vaadin-autocomplete",
+    "incubator-autocomplete",
     "web-components",
     "web-component",
     "polymer"
   ],
   "author": "Vaadin Ltd",
-  "license": "https://raw.githubusercontent.com/vaadin/vaadin-autocomplete/master/LICENSE",
+  "license": "https://raw.githubusercontent.com/vaadin/incubator-autocomplete/master/LICENSE",
   "bugs": {
-    "url": "https://github.com/vaadin/vaadin-autocomplete/issues"
+    "url": "https://github.com/vaadin/incubator-autocomplete/issues"
   },
   "homepage": "https://vaadin.com/components",
   "scripts": {
     "test": "wct",
-    "analyze": "polymer analyze vaadin-autocomplete.html > analysis.json",
+    "analyze": "polymer analyze incubator-autocomplete.html > analysis.json",
     "preversion": "gulp version:update"
   },
   "devDependencies": {

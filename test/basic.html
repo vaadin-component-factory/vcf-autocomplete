@@ -2,22 +2,22 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>vaadin-autocomplete tests</title>
+  <title>incubator-autocomplete tests</title>
   <script src="../../web-component-tester/browser.js"></script>
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
   <link rel="import" href="../../test-fixture/test-fixture.html">
-  <link rel="import" href="../vaadin-autocomplete.html">
+  <link rel="import" href="../incubator-autocomplete.html">
 </head>
 
 <body>
   <test-fixture id="default">
     <template>
-      <vaadin-autocomplete></vaadin-autocomplete>
+      <incubator-autocomplete></incubator-autocomplete>
     </template>
   </test-fixture>
 
   <script>
-    describe('VaadinAutocomplete test', () => {
+    describe('IncubatorAutocomplete test', () => {
       let autocompleteElement;
 
       beforeEach(() => {
@@ -38,7 +38,7 @@
           expect(autocompleteElement._overlayElement.style.top).to.be.eq('20px');
           expect(
             getComputedStyle(autocompleteElement._overlayElement)
-              .getPropertyValue('--vaadin-autocomplete-options-width')
+              .getPropertyValue('--incubator-autocomplete-options-width')
           ).to.be.eq('100px');
         });
       });
@@ -140,8 +140,8 @@
           sinon.stub(autocompleteElement, 'hideOptions');
         });
 
-        it('should dispatch a vaadin-autocomplete-value-applied event', (done) => {
-          autocompleteElement.addEventListener('vaadin-autocomplete-value-applied', (event) => {
+        it('should dispatch a incubator-autocomplete-value-applied event', (done) => {
+          autocompleteElement.addEventListener('incubator-autocomplete-value-applied', (event) => {
             expect(event.detail.value).to.be.eq('abc');
             done();
           });

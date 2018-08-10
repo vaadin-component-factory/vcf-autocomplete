@@ -6,7 +6,7 @@
       "description": "",
       "summary": "",
       "sourceRange": {
-        "file": "src/vaadin-autocomplete.html",
+        "file": "src/incubator-autocomplete.html",
         "start": {
           "line": 44,
           "column": 6
@@ -18,9 +18,9 @@
       },
       "elements": [
         {
-          "description": "`<vaadin-autocomplete>` is a template for incubator components.\n\n```\n<vaadin-autocomplete>\n</vaadin-autocomplete>\n```",
+          "description": "`<incubator-autocomplete>` is a template for incubator components.\n\n```\n<incubator-autocomplete>\n</incubator-autocomplete>\n```",
           "summary": "",
-          "path": "src/vaadin-autocomplete.html",
+          "path": "src/incubator-autocomplete.html",
           "properties": [],
           "methods": [],
           "staticMethods": [],
@@ -43,7 +43,7 @@
           },
           "privacy": "public",
           "superclass": "HTMLElement",
-          "name": "Vaadin.VaadinAutocomplete",
+          "name": "Vaadin.IncubatorAutocomplete",
           "attributes": [],
           "events": [],
           "styling": {
@@ -51,7 +51,7 @@
             "selectors": []
           },
           "slots": [],
-          "tagname": "vaadin-autocomplete"
+          "tagname": "incubator-autocomplete"
         }
       ]
     }

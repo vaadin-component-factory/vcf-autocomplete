@@ -1,16 +1,16 @@
-[![Build Status](https://travis-ci.org/vaadin/vaadin-autocomplete.svg?branch=master)](https://travis-ci.org/vaadin/vaadin-autocomplete)
+[![Build Status](https://travis-ci.org/vaadin/incubator-autocomplete.svg?branch=master)](https://travis-ci.org/vaadin/incubator-autocomplete)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/vaadin/web-components?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-# &lt;vaadin-autocomplete&gt;
+# &lt;incubator-autocomplete&gt;
 
-[&lt;vaadin-autocomplete&gt;](https://vaadin.com/components/vaadin-autocomplete) is a text input with a panel of suggested options, part of the [Vaadin components](https://vaadin.com/components).
+[&lt;incubator-autocomplete&gt;](https://vaadin.com/components/incubator-autocomplete) is a text input with a panel of suggested options, part of the [Vaadin components](https://vaadin.com/components).
 
 ```html
-  <vaadin-autocomplete id="demo1" label="Choose country" placeholder="Start typing a country name..." options="[[options]]">
-  </vaadin-autocomplete>
+  <incubator-autocomplete id="demo1" label="Choose country" placeholder="Start typing a country name..." options="[[options]]">
+  </incubator-autocomplete>
 ```
 
-[<img src="https://raw.githubusercontent.com/vaadin/vaadin-autocomplete/master/screenshot.png" width="200" alt="Screenshot of vaadin-autocomplete">](https://vaadin.com/components/vaadin-autocomplete)
+[<img src="https://raw.githubusercontent.com/vaadin/incubator-autocomplete/master/screenshot.png" width="200" alt="Screenshot of incubator-autocomplete">](https://vaadin.com/components/incubator-autocomplete)
 
 
 ## Installation
@@ -24,30 +24,30 @@ are only published on npm, not pushed to GitHub repositories.
 
 ### Polymer 2 and HTML Imports compatible version
 
-Install `vaadin-autocomplete`:
+Install `incubator-autocomplete`:
 
 ```sh
-bower i vaadin/vaadin-autocomplete --save
+bower i vaadin/incubator-autocomplete --save
 ```
 
 Once installed, import it in your application:
 
 ```html
-<link rel="import" href="bower_components/vaadin-autocomplete/vaadin-autocomplete.html">
+<link rel="import" href="bower_components/incubator-autocomplete/incubator-autocomplete.html">
 ```
 ### Polymer 3 and ES Modules compatible version
 
 
-Install `vaadin-autocomplete`:
+Install `incubator-autocomplete`:
 
 ```sh
-npm i @vaadin/vaadin-autocomplete --save
+npm i @vaadin/incubator-autocomplete --save
 ```
 
 Once installed, import it in your application:
 
 ```js
-import '@vaadin/vaadin-autocomplete/vaadin-autocomplete.js';
+import '@vaadin/incubator-autocomplete/incubator-autocomplete.js';
 ```
 
 ## Getting Started
@@ -56,38 +56,38 @@ Vaadin components use the Lumo theme by default.
 
 ## The file structure for Vaadin components
 
-- `src/vaadin-autocomplete.html`
+- `src/incubator-autocomplete.html`
 
   Unstyled component.
 
-- `theme/lumo/vaadin-autocomplete.html`
+- `theme/lumo/incubator-autocomplete.html`
 
   Component with Lumo theme.
 
-- `vaadin-autocomplete.html`
+- `incubator-autocomplete.html`
 
-  Alias for theme/lumo/vaadin-autocomplete.html
+  Alias for theme/lumo/incubator-autocomplete.html
 
 
 ## Running demos and tests in browser
 
-1. Fork the `vaadin-autocomplete` repository and clone it locally.
+1. Fork the `incubator-autocomplete` repository and clone it locally.
 
 1. Make sure you have [npm](https://www.npmjs.com/) installed.
 
-1. When in the `vaadin-autocomplete` directory, run `npm install` and then `bower install` to install dependencies.
+1. When in the `incubator-autocomplete` directory, run `npm install` and then `bower install` to install dependencies.
 
 1. Run `polymer serve --open`, browser will automatically open the component API documentation.
 
 1. You can also open demo or in-browser tests by adding **demo** or **test** to the URL, for example:
 
-  - http://127.0.0.1:8080/components/vaadin-autocomplete/demo
-  - http://127.0.0.1:8080/components/vaadin-autocomplete/test
+  - http://127.0.0.1:8080/components/incubator-autocomplete/demo
+  - http://127.0.0.1:8080/components/incubator-autocomplete/test
 
 
 ## Running tests from the command line
 
-1. When in the `vaadin-autocomplete` directory, run `polymer test`
+1. When in the `incubator-autocomplete` directory, run `polymer test`
 
 
 ## Following the coding style

@@ -15,9 +15,9 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
 <link rel="import" href="../../vaadin-item/vaadin-item.html">
 <link rel="import" href="../../vaadin-button/vaadin-button.html">
 <link rel="import" href="../../vaadin-icons/vaadin-icons.html">
-<link rel="import" href="vaadin-autocomplete-overlay.html">
+<link rel="import" href="incubator-autocomplete-overlay.html">
 
-<dom-module id="vaadin-autocomplete">
+<dom-module id="incubator-autocomplete">
   <template>
     <style>
       :host {
@@ -29,7 +29,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
       }
 
       [part="options-container"] {
-        min-width: var(--vaadin-autocomplete-options-width);
+        min-width: var(--incubator-autocomplete-options-width);
         --_lumo-item-selected-icon-display: none;
       }
 
@@ -44,7 +44,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
       }
 
       [part="no-results"] {
-        width: var(--vaadin-autocomplete-options-width);
+        width: var(--incubator-autocomplete-options-width);
         padding: 0.5em calc(0.375em + var(--lumo-border-radius) / 4 - 1px + 0.25em);
         box-sizing: border-box;
       }
@@ -74,7 +74,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
       </template>
     </vaadin-text-field>
 
-    <vaadin-autocomplete-overlay opened="{{optionsShown}}">
+    <incubator-autocomplete-overlay opened="{{optionsShown}}">
       <template>
         <vaadin-list-box
           part="options-container">
@@ -97,29 +97,29 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         </vaadin-list-box>
 
       </template>
-    </vaadin-autocomplete-overlay>
+    </incubator-autocomplete-overlay>
 
   </template>
 
   <script>
     {
       /**
-       * `<vaadin-autocomplete>` is a template for incubator components.
+       * `<incubator-autocomplete>` is a template for incubator components.
        *
        * ```
-       * <vaadin-autocomplete>
-       * </vaadin-autocomplete>
+       * <incubator-autocomplete>
+       * </incubator-autocomplete>
        * ```
        *
        * @memberof Vaadin
        * @demo demo/index.html
        */
-      class VaadinAutocomplete extends Vaadin.ElementMixin(
+      class IncubatorAutocomplete extends Vaadin.ElementMixin(
         Vaadin.ThemableMixin(
           Polymer.mixinBehaviors(Polymer.IronResizableBehavior, Polymer.Element))) {
 
         static get is() {
-          return 'vaadin-autocomplete';
+          return 'incubator-autocomplete';
         }
 
         static get properties() {
@@ -197,7 +197,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         ready() {
           super.ready();
 
-          this._overlayElement = this.shadowRoot.querySelector('vaadin-autocomplete-overlay');
+          this._overlayElement = this.shadowRoot.querySelector('incubator-autocomplete-overlay');
           this._textFieldElement = this.shadowRoot.querySelector('vaadin-text-field');
           this._optionsContainer = this._overlayElement.content.querySelector('vaadin-list-box');
 
@@ -226,7 +226,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           this._overlayElement.style.left = inputRect.left + 'px';
           this._overlayElement.style.top = inputRect.bottom + 'px';
 
-          this._overlayElement.updateStyles({'--vaadin-autocomplete-options-width': inputRect.width + 'px'});
+          this._overlayElement.updateStyles({'--incubator-autocomplete-options-width': inputRect.width + 'px'});
         }
 
         showOptions() {
@@ -256,7 +256,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         }
 
         _applyValue(value) {
-          this.dispatchEvent(new CustomEvent('vaadin-autocomplete-value-applied', {
+          this.dispatchEvent(new CustomEvent('incubator-autocomplete-value-applied', {
             bubbles: true,
             detail: {
               value: value
@@ -397,15 +397,15 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         }
       }
 
-      customElements.define(VaadinAutocomplete.is, VaadinAutocomplete);
+      customElements.define(IncubatorAutocomplete.is, IncubatorAutocomplete);
 
       /**
        * @namespace Vaadin
        */
-      window.Vaadin.VaadinAutocomplete = VaadinAutocomplete;
+      window.Vaadin.IncubatorAutocomplete = IncubatorAutocomplete;
 
       if (window.Vaadin.runIfDevelopmentMode) {
-        window.Vaadin.runIfDevelopmentMode('vaadin-license-checker', VaadinAutocomplete);
+        window.Vaadin.runIfDevelopmentMode('vaadin-license-checker', IncubatorAutocomplete);
       }
     }
   </script>

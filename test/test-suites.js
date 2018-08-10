@@ -1,3 +1,3 @@
-window.VaadinAutocompleteSuites = [
+window.IncubatorAutocompleteSuites = [
   'basic.html',
 ];
