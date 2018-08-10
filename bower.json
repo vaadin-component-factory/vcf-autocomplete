@@ -1,19 +1,19 @@
 {
-  "name": "vaadin-autocomplete",
+  "name": "incubator-autocomplete",
   "homepage": "https://vaadin.com/components",
   "authors": [
     "Vaadin Ltd"
   ],
-  "description": "vaadin-autocomplete",
-  "main": "vaadin-autocomplete.html",
+  "description": "incubator-autocomplete",
+  "main": "incubator-autocomplete.html",
   "keywords": [
     "Vaadin",
-    "vaadin-autocomplete",
+    "incubator-autocomplete",
     "web-components",
     "web-component",
     "polymer"
   ],
-  "license": "https://raw.githubusercontent.com/vaadin/vaadin-autocomplete/master/LICENSE",
+  "license": "https://raw.githubusercontent.com/vaadin/incubator-autocomplete/master/LICENSE",
   "ignore": [
     "**/.*",
     "node_modules",

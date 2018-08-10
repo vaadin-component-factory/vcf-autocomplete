@@ -1,4 +1,4 @@
-gemini.suite('vaadin-autocomplete', function(rootSuite) {
+gemini.suite('incubator-autocomplete', function(rootSuite) {
   function wait(actions, find) {
     actions.wait(5000);
   }

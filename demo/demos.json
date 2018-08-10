@@ -3,10 +3,10 @@
   "pages": [
   {
     "name": "Basics",
-    "url": "vaadin-autocomplete-basic-demos",
-    "src": "vaadin-autocomplete-basic-demos.html",
+    "url": "incubator-autocomplete-basic-demos",
+    "src": "incubator-autocomplete-basic-demos.html",
     "meta": {
-      "title": "vaadin-autocomplete Basic Examples",
+      "title": "incubator-autocomplete Basic Examples",
       "description": "",
       "image": ""
      }
