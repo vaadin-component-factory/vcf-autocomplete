@@ -48,7 +48,7 @@
           sinon.stub(autocompleteElement, '_setOverlayPosition');
 
           autocompleteElement.showOptions();
-          expect(autocompleteElement.optionsShown).to.be.true;
+          expect(autocompleteElement.opened).to.be.true;
           expect(autocompleteElement._setOverlayPosition.calledOnce).to.be.true;
         });
       });
@@ -57,7 +57,7 @@
         it('should hide the overlay', () => {
           autocompleteElement.showOptions();
           autocompleteElement.hideOptions();
-          expect(autocompleteElement.optionsShown).to.be.false;
+          expect(autocompleteElement.opened).to.be.false;
         });
       });
 
@@ -83,7 +83,7 @@
         it('should hide options if the user erases the text input value', () => {
           sinon.stub(autocompleteElement, 'hideOptions');
           sinon.stub(autocompleteElement, 'showOptions', () => {
-            autocompleteElement.optionsShown = true;
+            autocompleteElement.opened = true;
           });
           autocompleteElement._valueChange('abc');
           autocompleteElement._valueChange('');
@@ -93,7 +93,7 @@
 
         it('should trigger showOptions once', () => {
           sinon.stub(autocompleteElement, 'showOptions', () => {
-            autocompleteElement.optionsShown = true;
+            autocompleteElement.opened = true;
           });
 
           autocompleteElement._valueChange('abc');
@@ -104,11 +104,11 @@
 
         it('should trigger hideOptions once', () => {
           sinon.stub(autocompleteElement, 'showOptions', () => {
-            autocompleteElement.optionsShown = true;
+            autocompleteElement.opened = true;
           });
 
           sinon.stub(autocompleteElement, 'hideOptions', () => {
-            autocompleteElement.optionsShown = false;
+            autocompleteElement.opened = false;
           });
 
           autocompleteElement._valueChange('abc');

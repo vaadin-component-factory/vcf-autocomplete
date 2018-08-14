@@ -74,7 +74,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
       </template>
     </vaadin-text-field>
 
-    <incubator-autocomplete-overlay opened="{{optionsShown}}">
+    <incubator-autocomplete-overlay opened="{{opened}}">
       <template>
         <vaadin-list-box
           part="options-container">
@@ -124,7 +124,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
 
         static get properties() {
           return {
-            optionsShown: {
+            opened: {
               type: Boolean,
               reflectToAttribute: true,
               value: false
@@ -231,11 +231,11 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
 
         showOptions() {
           this._setOverlayPosition();
-          this.optionsShown = true;
+          this.opened = true;
         }
 
         hideOptions(event) {
-          this.optionsShown = false;
+          this.opened = false;
         }
 
         _valueChange(value) {
@@ -244,9 +244,9 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
             this._selectedOption = null;
           }
 
-          if (value.length > 0 && !this.optionsShown) {
+          if (value.length > 0 && !this.opened) {
             this.showOptions();
-          } else if (value.length == 0 && this.optionsShown) {
+          } else if (value.length == 0 && this.opened) {
             this.hideOptions();
           }
         }
