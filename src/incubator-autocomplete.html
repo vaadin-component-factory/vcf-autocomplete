@@ -43,18 +43,16 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         color: var(--lumo-contrast-60pct);
       }
 
-      [part="no-results"] {
-        width: var(--incubator-autocomplete-options-width);
-        padding: 0.5em calc(0.375em + var(--lumo-border-radius) / 4 - 1px + 0.25em);
-        box-sizing: border-box;
-      }
-
       [part="bold"] {
         font-weight: 600;
       }
 
       [part="loading-indicator"]::after {
         content: 'Loading...';
+      }
+
+      [part="no-results"]::after {
+        content: 'No results';
       }
     </style>
 
@@ -97,7 +95,8 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
             <vaadin-item
               disabled
               part="option">
-              No results
+              <div part="no-results">
+              </div>
             </vaadin-item>
           </template>
 
