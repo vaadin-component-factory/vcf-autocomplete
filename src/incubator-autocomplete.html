@@ -52,6 +52,10 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
       [part="bold"] {
         font-weight: 600;
       }
+
+      [part="loading-indicator"]::after {
+        content: 'Loading...';
+      }
     </style>
 
     <vaadin-text-field
@@ -79,19 +83,30 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         <vaadin-list-box
           part="options-container">
 
-          <template is="dom-repeat" items="[[_limitedOptions]]" as="option">
-            <vaadin-item
-              on-click="_optionClicked"
-              part="option">
-              <span part="bold">[[_getInputtedPart(value, option)]]</span>[[_getSuggestedPart(value, option)]]
-            </vaadin-item>
+          <template is="dom-if" if="[[!loading]]">
+            <template is="dom-repeat" items="[[_limitedOptions]]" as="option">
+              <vaadin-item
+                on-click="_optionClicked"
+                part="option">
+                <span part="bold">[[_getInputtedPart(value, option)]]</span>[[_getSuggestedPart(value, option)]]
+              </vaadin-item>
+            </template>
           </template>
 
-          <template is="dom-if" if="[[!_limitedOptions.length]]">
+          <template is="dom-if" if="[[_noResultsShown(options, loading)]]">
             <vaadin-item
               disabled
               part="option">
               No results
+            </vaadin-item>
+          </template>
+
+          <template is="dom-if" if="[[loading]]">
+            <vaadin-item
+              disabled
+              part="option">
+              <div part="loading-indicator">
+              </div>
             </vaadin-item>
           </template>
         </vaadin-list-box>
@@ -147,6 +162,12 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
               value: 10
             },
 
+            loading: {
+              type: Boolean,
+              reflectToAttribute: true,
+              value: false
+            },
+
             label: {
               type: String
             },
@@ -198,7 +219,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           super.ready();
 
           this._overlayElement = this.shadowRoot.querySelector('incubator-autocomplete-overlay');
-          this._textFieldElement = this.shadowRoot.querySelector('vaadin-text-field');
+          this._textFieldElement = this.$.textField;
           this._optionsContainer = this._overlayElement.content.querySelector('vaadin-list-box');
 
           this._overlayElement.addEventListener('vaadin-overlay-outside-click', (ev) => ev.preventDefault());
@@ -221,10 +242,10 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         }
 
         _setOverlayPosition() {
-          const inputRect = this.getBoundingClientRect();
+          const inputRect = this.$.textField.getBoundingClientRect();
 
           this._overlayElement.style.left = inputRect.left + 'px';
-          this._overlayElement.style.top = inputRect.bottom + 'px';
+          this._overlayElement.style.top = inputRect.bottom + window.scrollY + 'px';
 
           this._overlayElement.updateStyles({'--incubator-autocomplete-options-width': inputRect.width + 'px'});
         }
@@ -394,6 +415,10 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
 
         _onInput(event) {
           this.value = event.target.value;
+        }
+
+        _noResultsShown(options, loading) {
+          return (!options || !options.length) && !loading;
         }
       }
 

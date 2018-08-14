@@ -26,7 +26,7 @@
 
       describe('_setOverlayPosition', () => {
         it('should have the proper overlay position and width', () => {
-          sinon.stub(autocompleteElement, 'getBoundingClientRect').returns({
+          sinon.stub(autocompleteElement._textFieldElement, 'getBoundingClientRect').returns({
             left: 10,
             bottom: 20,
             width: 100
