@@ -33,7 +33,6 @@
     "vaadin-text-field": "^2.0.1",
     "vaadin-overlay": "^3.0.3",
     "vaadin-list-box": "^1.0.2",
-    "vaadin-icons": "^4.1.4",
     "iron-resizable-behavior": "^2.1.1"
   },
   "devDependencies": {
@@ -42,7 +41,6 @@
     "webcomponentsjs": "^1.0.0",
     "web-component-tester": "^6.1.5",
     "test-fixture": "^3.0.0",
-    "vaadin-demo-helpers": "vaadin/vaadin-demo-helpers#^1.0.0",
-    "vaadin-icons": "vaadin/vaadin-icons#^4.1.4"
+    "vaadin-demo-helpers": "vaadin/vaadin-demo-helpers#^1.0.0"
   }
 }
