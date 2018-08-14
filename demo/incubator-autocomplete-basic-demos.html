@@ -54,7 +54,60 @@
       </template>
     </vaadin-demo-snippet>
 
+    <h3>Slow API demo</h3>
+    <vaadin-demo-snippet id="incubator-autocomplete-demo-slow-api">
+      <template preserve-content>
+        <incubator-autocomplete
+          id="demo2"
+          label="Choose country"
+          placeholder="Start typing a country name...">
+        </incubator-autocomplete>
+
+        <script>
+          let countries = [];
+
+          function filterByValue(items, value) {
+            return items.filter(item => item.toLowerCase().startsWith(value.toLowerCase()));
+          }
+
+          function getDataDefer(callback, value) {
+            if (!countries.length) {
+              var xhr = new XMLHttpRequest();
+              xhr.onload = function() {
+                countries = JSON.parse(xhr.responseText);
+
+                setTimeout(() => callback(filterByValue(countries, value)), 1000);
+              };
+
+              var url = 'https://demo.vaadin.com/demo-data/1.0/countries';
+
+              xhr.open('GET', url, true);
+
+              xhr.send();
+            } else {
+              setTimeout(() => callback(filterByValue(countries, value)), 500);
+            }
+          }
+
+          window.addDemoReadyListener('#incubator-autocomplete-demo-slow-api', function(document) {
+            const autocompleteElement = document.querySelector('#demo2');
+
+            autocompleteElement.addEventListener('value-changed', (ev) => {
+              if (ev.detail.value.length > 0) {
+                autocompleteElement.loading = true;
+
+                getDataDefer((res) => {
+                  autocompleteElement.options = res;
+                  autocompleteElement.loading = false;
+                }, ev.detail.value);
+              }
+            });
+          });
+        </script>
+      </template>
+    </vaadin-demo-snippet>
   </template>
+
   <script>
     class IncubatorAutocompleteBasicDemos extends DemoReadyEventEmitter(ElementDemo(Polymer.Element)) {
       static get is() {
