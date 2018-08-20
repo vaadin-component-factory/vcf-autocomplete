@@ -3,14 +3,14 @@
 
 # &lt;incubator-autocomplete&gt;
 
-[&lt;incubator-autocomplete&gt;](https://vaadin.com/components/incubator-autocomplete) is a text input with a panel of suggested options, part of the [Vaadin components](https://vaadin.com/components).
+[&lt;incubator-autocomplete&gt;](https://vaadin.com/components/incubator-autocomplete) is a text input with a panel of suggested options.
 
 ```html
   <incubator-autocomplete id="demo1" label="Choose country" placeholder="Start typing a country name..." options="[[options]]">
   </incubator-autocomplete>
 ```
 
-[<img src="https://raw.githubusercontent.com/vaadin/incubator-autocomplete/master/screenshot.png" width="200" alt="Screenshot of incubator-autocomplete">](https://vaadin.com/components/incubator-autocomplete)
+[<img src="https://raw.githubusercontent.com/vaadin/incubator-autocomplete/master/screenshot.gif" width="200" alt="Screenshot of incubator-autocomplete">](https://vaadin.com/components/incubator-autocomplete)
 
 
 ## Installation
