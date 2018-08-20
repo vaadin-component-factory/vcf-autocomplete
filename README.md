@@ -3,6 +3,8 @@
 
 # &lt;incubator-autocomplete&gt;
 
+[Live Demo ↗](https://incubator.app.fi/incubator-autocomplete-demo/index.html)
+
 [&lt;incubator-autocomplete&gt;](https://vaadin.com/components/incubator-autocomplete) is a text input with a panel of suggested options.
 
 ```html
