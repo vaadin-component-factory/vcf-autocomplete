@@ -35,20 +35,6 @@ Once installed, import it in your application:
 ```html
 <link rel="import" href="bower_components/incubator-autocomplete/incubator-autocomplete.html">
 ```
-### Polymer 3 and ES Modules compatible version
-
-
-Install `incubator-autocomplete`:
-
-```sh
-npm i @vaadin/incubator-autocomplete --save
-```
-
-Once installed, import it in your application:
-
-```js
-import '@vaadin/incubator-autocomplete/incubator-autocomplete.js';
-```
 
 ## Getting Started
 
