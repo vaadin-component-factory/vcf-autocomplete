@@ -130,7 +130,8 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
             opened: {
               type: Boolean,
               reflectToAttribute: true,
-              value: false
+              value: false,
+              observer: '_openedChange'
             },
 
             value: {
@@ -141,8 +142,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
 
             options: {
               type: Array,
-              value: () => [],
-              observer: '_optionsChange'
+              value: () => []
             },
 
             limit: {
@@ -183,7 +183,8 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
 
         static get observers() {
           return [
-            '_selectedOptionChanged(_selectedOption)'
+            '_selectedOptionChanged(_selectedOption)',
+            '_optionsChange(options, options.splices)'
           ];
         }
 
@@ -238,11 +239,6 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           this._overlayElement.updateStyles({'--incubator-autocomplete-options-width': inputRect.width + 'px'});
         }
 
-        showOptions() {
-          this._setOverlayPosition();
-          this.opened = true;
-        }
-
         hideOptions(event) {
           this.opened = false;
         }
@@ -254,7 +250,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           }
 
           if (value.length > 0 && !this.opened) {
-            this.showOptions();
+            this.opened = true;
           } else if (value.length == 0 && this.opened) {
             this.hideOptions();
           }
@@ -279,7 +275,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
 
         _textFieldFocused() {
           if (this.value && this.value.length > 0) {
-            this.showOptions();
+            this.opened = true;
           }
         }
 
@@ -297,10 +293,18 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         }
 
         _getInputtedPart(value, option) {
+          if (!value) {
+            return option;
+          }
+
           return option.substr(0, value.length);
         }
 
         _getSuggestedPart(value, option) {
+          if (!value) {
+            return;
+          }
+
           return option.substr(value.length, option.length);
         }
 
@@ -409,6 +413,12 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
 
         _noResultsShown(options, loading) {
           return (!options || !options.length) && !loading;
+        }
+
+        _openedChange(opened) {
+          if (opened) {
+            this._setOverlayPosition();
+          }
         }
       }
 
