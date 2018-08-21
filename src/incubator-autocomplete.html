@@ -108,7 +108,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
   </template>
 
   <script>
-    {
+    (function() {
       /**
        * `<incubator-autocomplete>` is a template for incubator components.
        *
@@ -176,10 +176,9 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
             },
 
             _overlayElement: Object,
-            _textFieldElement: Object,
             _optionsContainer: Object,
             _selectedOption: Object,
-            _boundHideOptions: Object,
+            _boundOutsideClickHandler: Object,
             _boundSetOverlayPosition: Object,
           };
         }
@@ -194,24 +193,23 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         constructor() {
           super();
           this._boundSetOverlayPosition = this._setOverlayPosition.bind(this);
-          this._boundHideOptions = this.hideOptions.bind(this);
+          this._boundOutsideClickHandler = this._outsideClickHandler.bind(this);
         }
 
         connectedCallback() {
           super.connectedCallback();
 
-          this.$.textField.addEventListener('input', this._onInput.bind(this));
-          this.addEventListener('iron-resize', this._boundSetOverlayPosition);
-          this.addEventListener('click', this._elementClickListener);
-          document.addEventListener('click', this._boundHideOptions);
-          this.addEventListener('keydown', this._onKeyDown.bind(this));
+          document.addEventListener('click', this._boundOutsideClickHandler);
         }
 
         ready() {
           super.ready();
 
+          this.$.textField.addEventListener('input', this._onInput.bind(this));
+          this.addEventListener('iron-resize', this._boundSetOverlayPosition);
+          this.addEventListener('click', this._elementClickListener);
+          this.addEventListener('keydown', this._onKeyDown.bind(this));
           this._overlayElement = this.shadowRoot.querySelector('incubator-autocomplete-overlay');
-          this._textFieldElement = this.$.textField;
           this._optionsContainer = this._overlayElement.content.querySelector('vaadin-list-box');
 
           this._overlayElement.addEventListener('vaadin-overlay-outside-click', (ev) => ev.preventDefault());
@@ -220,13 +218,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         disconnectedCallback() {
           super.disconnectedCallback();
 
-          this.$.textField.removeEventListener('input', this._onInput.bind(this));
-          this.removeEventListener('iron-resize', this._boundSetOverlayPosition);
-          document.removeEventListener('click', this._boundHideOptions);
-          this.removeEventListener('click', this._elementClickListener);
-          this.removeEventListener('keydown', this._onKeyDown.bind(this));
-
-          this.hideOptions();
+          document.removeEventListener('click', this._boundOutsideClickHandler);
         }
 
         _elementClickListener(event) {
@@ -242,7 +234,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           this._overlayElement.updateStyles({'--incubator-autocomplete-options-width': inputRect.width + 'px'});
         }
 
-        hideOptions(event) {
+        _outsideClickHandler() {
           this.opened = false;
         }
 
@@ -255,7 +247,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           if (value.length > 0 && !this.opened) {
             this.opened = true;
           } else if (value.length == 0 && this.opened) {
-            this.hideOptions();
+            this.opened = false;
           }
         }
 
@@ -272,7 +264,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           }));
 
           this._changeTextFieldValue(value);
-          this.hideOptions();
+          this.opened = false;
           this.$.textField.blur();
         }
 
@@ -292,7 +284,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
 
         clear() {
           this._changeTextFieldValue('');
-          this._textFieldElement.focus();
+          this.$.textField.focus();
         }
 
         _getInputtedPart(value, option) {
@@ -335,7 +327,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
               break;
             case 'Escape':
               this.$.textField.blur();
-              this.hideOptions();
+              this.opened = false;
 
               break;
           }
@@ -435,6 +427,6 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
       if (window.Vaadin.runIfDevelopmentMode) {
         window.Vaadin.runIfDevelopmentMode('vaadin-license-checker', IncubatorAutocomplete);
       }
-    }
+    })();
   </script>
 </dom-module>
