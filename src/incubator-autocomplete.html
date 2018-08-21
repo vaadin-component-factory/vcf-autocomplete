@@ -34,7 +34,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
       }
 
       [part="option"] {
-        padding-left: calc(0.375em + var(--lumo-border-radius) / 4 - 1px + 0.25em);
+        --_lumo-list-box-item-padding-left: calc(0.375em + var(--lumo-border-radius) / 4 - 1px + 0.25em);
       }
 
       [part="clear"] {
@@ -244,7 +244,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           const inputRect = this.$.textField.getBoundingClientRect();
 
           this._overlayElement.style.left = inputRect.left + 'px';
-          this._overlayElement.style.top = inputRect.bottom + window.scrollY + 'px';
+          this._overlayElement.style.top = inputRect.bottom + window.pageYOffset + 'px';
 
           this._overlayElement.updateStyles({'--incubator-autocomplete-options-width': inputRect.width + 'px'});
         }
@@ -316,13 +316,15 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         }
 
         _onKeyDown(event) {
-          switch (event.key) {
-            case 'ArrowDown':
+          const key = event.key.replace(/^Arrow/, '');
+
+          switch (key) {
+            case 'Down':
               event.preventDefault();
               this._navigate('next');
 
               break;
-            case 'ArrowUp':
+            case 'Up':
               event.preventDefault();
               this._navigate('prev');
 
