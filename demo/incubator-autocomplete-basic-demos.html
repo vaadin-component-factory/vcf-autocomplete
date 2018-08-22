@@ -42,7 +42,7 @@
 
             autocompleteElement.addEventListener('value-changed', (ev) => {
               if (countries.length) {
-                autocompleteElement.options = countries.filter(country => country.toLowerCase().startsWith(ev.detail.value.toLowerCase()));
+                autocompleteElement.options = countries.filter(country => country.toLowerCase().indexOf(ev.detail.value.toLowerCase()) === 0);
               }
             });
 
@@ -67,7 +67,7 @@
           let countries = [];
 
           function filterByValue(items, value) {
-            return items.filter(item => item.toLowerCase().startsWith(value.toLowerCase()));
+            return items.filter(item => item.toLowerCase().indexOf(value.toLowerCase()) === 0);
           }
 
           function getDataDefer(callback, value) {

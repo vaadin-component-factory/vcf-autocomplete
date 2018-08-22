@@ -7,6 +7,8 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
 -->
 
 <link rel="import" href="../../polymer/polymer-element.html">
+<link rel="import" href="../../polymer/lib/elements/dom-if.html">
+<link rel="import" href="../../polymer/lib/elements/dom-repeat.html">
 <link rel="import" href="../../vaadin-themable-mixin/vaadin-themable-mixin.html">
 <link rel="import" href="../../vaadin-element-mixin/vaadin-element-mixin.html">
 <link rel="import" href="../../iron-resizable-behavior/iron-resizable-behavior.html">
@@ -15,6 +17,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
 <link rel="import" href="../../vaadin-item/vaadin-item.html">
 <link rel="import" href="../../vaadin-button/vaadin-button.html">
 <link rel="import" href="../../vaadin-lumo-styles/icons.html">
+<link rel="import" href="../../iron-icon/iron-icon.html">
 <link rel="import" href="incubator-autocomplete-overlay.html">
 
 <dom-module id="incubator-autocomplete">
@@ -30,17 +33,6 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
 
       [part="options-container"] {
         min-width: var(--incubator-autocomplete-options-width);
-        --_lumo-item-selected-icon-display: none;
-      }
-
-      [part="option"] {
-        padding-left: calc(0.375em + var(--lumo-border-radius) / 4 - 1px + 0.25em);
-      }
-
-      [part="clear"] {
-        --lumo-button-size: 15px;
-        --lumo-icon-size-m: 19px;
-        color: var(--lumo-contrast-60pct);
       }
 
       [part="bold"] {
@@ -116,7 +108,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
   </template>
 
   <script>
-    {
+    (function() {
       /**
        * `<incubator-autocomplete>` is a template for incubator components.
        *
@@ -141,7 +133,8 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
             opened: {
               type: Boolean,
               reflectToAttribute: true,
-              value: false
+              value: false,
+              observer: '_openedChange'
             },
 
             value: {
@@ -152,8 +145,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
 
             options: {
               type: Array,
-              value: () => [],
-              observer: '_optionsChange'
+              value: () => []
             },
 
             limit: {
@@ -184,41 +176,40 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
             },
 
             _overlayElement: Object,
-            _textFieldElement: Object,
             _optionsContainer: Object,
             _selectedOption: Object,
-            _boundHideOptions: Object,
+            _boundOutsideClickHandler: Object,
             _boundSetOverlayPosition: Object,
           };
         }
 
         static get observers() {
           return [
-            '_selectedOptionChanged(_selectedOption)'
+            '_selectedOptionChanged(_selectedOption)',
+            '_optionsChange(options, options.splices)'
           ];
         }
 
         constructor() {
           super();
           this._boundSetOverlayPosition = this._setOverlayPosition.bind(this);
-          this._boundHideOptions = this.hideOptions.bind(this);
+          this._boundOutsideClickHandler = this._outsideClickHandler.bind(this);
         }
 
         connectedCallback() {
           super.connectedCallback();
 
-          this.$.textField.addEventListener('input', this._onInput.bind(this));
-          this.addEventListener('iron-resize', this._boundSetOverlayPosition);
-          this.addEventListener('click', this._elementClickListener);
-          document.addEventListener('click', this._boundHideOptions);
-          this.addEventListener('keydown', this._onKeyDown.bind(this));
+          document.addEventListener('click', this._boundOutsideClickHandler);
         }
 
         ready() {
           super.ready();
 
+          this.$.textField.addEventListener('input', this._onInput.bind(this));
+          this.addEventListener('iron-resize', this._boundSetOverlayPosition);
+          this.addEventListener('click', this._elementClickListener);
+          this.addEventListener('keydown', this._onKeyDown.bind(this));
           this._overlayElement = this.shadowRoot.querySelector('incubator-autocomplete-overlay');
-          this._textFieldElement = this.$.textField;
           this._optionsContainer = this._overlayElement.content.querySelector('vaadin-list-box');
 
           this._overlayElement.addEventListener('vaadin-overlay-outside-click', (ev) => ev.preventDefault());
@@ -227,13 +218,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         disconnectedCallback() {
           super.disconnectedCallback();
 
-          this.$.textField.removeEventListener('input', this._onInput.bind(this));
-          this.removeEventListener('iron-resize', this._boundSetOverlayPosition);
-          document.removeEventListener('click', this._boundHideOptions);
-          this.removeEventListener('click', this._elementClickListener);
-          this.removeEventListener('keydown', this._onKeyDown.bind(this));
-
-          this.hideOptions();
+          document.removeEventListener('click', this._boundOutsideClickHandler);
         }
 
         _elementClickListener(event) {
@@ -244,17 +229,12 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           const inputRect = this.$.textField.getBoundingClientRect();
 
           this._overlayElement.style.left = inputRect.left + 'px';
-          this._overlayElement.style.top = inputRect.bottom + window.scrollY + 'px';
+          this._overlayElement.style.top = inputRect.bottom + window.pageYOffset + 'px';
 
           this._overlayElement.updateStyles({'--incubator-autocomplete-options-width': inputRect.width + 'px'});
         }
 
-        showOptions() {
-          this._setOverlayPosition();
-          this.opened = true;
-        }
-
-        hideOptions(event) {
+        _outsideClickHandler() {
           this.opened = false;
         }
 
@@ -265,9 +245,9 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           }
 
           if (value.length > 0 && !this.opened) {
-            this.showOptions();
+            this.opened = true;
           } else if (value.length == 0 && this.opened) {
-            this.hideOptions();
+            this.opened = false;
           }
         }
 
@@ -284,13 +264,13 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           }));
 
           this._changeTextFieldValue(value);
-          this.hideOptions();
+          this.opened = false;
           this.$.textField.blur();
         }
 
         _textFieldFocused() {
           if (this.value && this.value.length > 0) {
-            this.showOptions();
+            this.opened = true;
           }
         }
 
@@ -304,25 +284,35 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
 
         clear() {
           this._changeTextFieldValue('');
-          this._textFieldElement.focus();
+          this.$.textField.focus();
         }
 
         _getInputtedPart(value, option) {
+          if (!value) {
+            return option;
+          }
+
           return option.substr(0, value.length);
         }
 
         _getSuggestedPart(value, option) {
+          if (!value) {
+            return;
+          }
+
           return option.substr(value.length, option.length);
         }
 
         _onKeyDown(event) {
-          switch (event.key) {
-            case 'ArrowDown':
+          const key = event.key.replace(/^Arrow/, '');
+
+          switch (key) {
+            case 'Down':
               event.preventDefault();
               this._navigate('next');
 
               break;
-            case 'ArrowUp':
+            case 'Up':
               event.preventDefault();
               this._navigate('prev');
 
@@ -337,7 +327,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
               break;
             case 'Escape':
               this.$.textField.blur();
-              this.hideOptions();
+              this.opened = false;
 
               break;
           }
@@ -419,6 +409,12 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         _noResultsShown(options, loading) {
           return (!options || !options.length) && !loading;
         }
+
+        _openedChange(opened) {
+          if (opened) {
+            this._setOverlayPosition();
+          }
+        }
       }
 
       customElements.define(IncubatorAutocomplete.is, IncubatorAutocomplete);
@@ -431,6 +427,6 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
       if (window.Vaadin.runIfDevelopmentMode) {
         window.Vaadin.runIfDevelopmentMode('vaadin-license-checker', IncubatorAutocomplete);
       }
-    }
+    })();
   </script>
 </dom-module>

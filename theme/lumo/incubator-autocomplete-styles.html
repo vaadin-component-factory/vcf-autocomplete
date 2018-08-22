@@ -4,6 +4,19 @@
 <dom-module id="lumo-autocomplete" theme-for="incubator-autocomplete">
   <template>
     <style>
+      [part="options-container"] {
+        --_lumo-item-selected-icon-display: none;
+      }
+
+      [part="option"] {
+        --_lumo-list-box-item-padding-left: calc(0.375em + var(--lumo-border-radius) / 4 - 1px + 0.25em);
+      }
+
+      [part="clear"] {
+        --lumo-button-size: 15px;
+        --lumo-icon-size-m: 19px;
+        color: var(--lumo-contrast-60pct);
+      }
     </style>
   </template>
 </dom-module>
