@@ -1,12 +1,12 @@
 {
-  "name": "Vaadin Incubator Element",
+  "name": "Vaadin Vcf Element",
   "pages": [
   {
     "name": "Basics",
-    "url": "incubator-autocomplete-basic-demos",
-    "src": "incubator-autocomplete-basic-demos.html",
+    "url": "vcf-autocomplete-basic-demos",
+    "src": "vcf-autocomplete-basic-demos.html",
     "meta": {
-      "title": "incubator-autocomplete Basic Examples",
+      "title": "vcf-autocomplete Basic Examples",
       "description": "",
       "image": ""
      }

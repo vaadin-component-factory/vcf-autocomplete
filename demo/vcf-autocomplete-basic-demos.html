@@ -1,4 +1,4 @@
-<dom-module id="incubator-autocomplete-basic-demos">
+<dom-module id="vcf-autocomplete-basic-demos">
   <template>
     <style include="vaadin-component-demo-shared-styles">
       :host {
@@ -7,10 +7,10 @@
     </style>
 
     <h3>Demo sample</h3>
-    <vaadin-demo-snippet id="incubator-autocomplete-demo-sample">
+    <vaadin-demo-snippet id="vcf-autocomplete-demo-sample">
       <template preserve-content>
-        <incubator-autocomplete id="demo1" label="Choose country" placeholder="Start typing a country name...">
-        </incubator-autocomplete>
+        <vcf-autocomplete id="demo1" label="Choose country" placeholder="Start typing a country name...">
+        </vcf-autocomplete>
 
         <div>
           Last applied value:
@@ -32,7 +32,7 @@
             xhr.send();
           }
 
-          window.addDemoReadyListener('#incubator-autocomplete-demo-sample', function(document) {
+          window.addDemoReadyListener('#vcf-autocomplete-demo-sample', function(document) {
             const autocompleteElement = document.querySelector('#demo1');
             let countries = [];
 
@@ -46,7 +46,7 @@
               }
             });
 
-            autocompleteElement.addEventListener('incubator-autocomplete-value-applied', (ev) => {
+            autocompleteElement.addEventListener('vcf-autocomplete-value-applied', (ev) => {
               document.getElementById('lastAppliedValue').textContent = ev.detail.value;
             });
           });
@@ -55,13 +55,13 @@
     </vaadin-demo-snippet>
 
     <h3>Slow API demo</h3>
-    <vaadin-demo-snippet id="incubator-autocomplete-demo-slow-api">
+    <vaadin-demo-snippet id="vcf-autocomplete-demo-slow-api">
       <template preserve-content>
-        <incubator-autocomplete
+        <vcf-autocomplete
           id="demo2"
           label="Choose country"
           placeholder="Start typing a country name...">
-        </incubator-autocomplete>
+        </vcf-autocomplete>
 
         <script>
           let countries = [];
@@ -89,7 +89,7 @@
             }
           }
 
-          window.addDemoReadyListener('#incubator-autocomplete-demo-slow-api', function(document) {
+          window.addDemoReadyListener('#vcf-autocomplete-demo-slow-api', function(document) {
             const autocompleteElement = document.querySelector('#demo2');
 
             autocompleteElement.addEventListener('value-changed', (ev) => {
@@ -109,11 +109,11 @@
   </template>
 
   <script>
-    class IncubatorAutocompleteBasicDemos extends DemoReadyEventEmitter(ElementDemo(Polymer.Element)) {
+    class VcfAutocompleteBasicDemos extends DemoReadyEventEmitter(ElementDemo(Polymer.Element)) {
       static get is() {
-        return 'incubator-autocomplete-basic-demos';
+        return 'vcf-autocomplete-basic-demos';
       }
     }
-    customElements.define(IncubatorAutocompleteBasicDemos.is, IncubatorAutocompleteBasicDemos);
+    customElements.define(VcfAutocompleteBasicDemos.is, VcfAutocompleteBasicDemos);
   </script>
 </dom-module>

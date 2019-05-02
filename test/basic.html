@@ -2,22 +2,22 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>incubator-autocomplete tests</title>
+  <title>vcf-autocomplete tests</title>
   <script src="../../web-component-tester/browser.js"></script>
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
   <link rel="import" href="../../test-fixture/test-fixture.html">
-  <link rel="import" href="../incubator-autocomplete.html">
+  <link rel="import" href="../vcf-autocomplete.html">
 </head>
 
 <body>
   <test-fixture id="default">
     <template>
-      <incubator-autocomplete></incubator-autocomplete>
+      <vcf-autocomplete></vcf-autocomplete>
     </template>
   </test-fixture>
 
   <script>
-    describe('IncubatorAutocomplete test', () => {
+    describe('VcfAutocomplete test', () => {
       let autocompleteElement;
 
       beforeEach(() => {
@@ -38,7 +38,7 @@
           expect(autocompleteElement._overlayElement.style.top).to.be.eq('20px');
           expect(
             getComputedStyle(autocompleteElement._overlayElement)
-              .getPropertyValue('--incubator-autocomplete-options-width')
+              .getPropertyValue('--vcf-autocomplete-options-width')
           ).to.be.eq('100px');
         });
       });
@@ -89,8 +89,8 @@
           sinon.stub(autocompleteElement, '_changeTextFieldValue');
         });
 
-        it('should dispatch a incubator-autocomplete-value-applied event', (done) => {
-          autocompleteElement.addEventListener('incubator-autocomplete-value-applied', (event) => {
+        it('should dispatch a vcf-autocomplete-value-applied event', (done) => {
+          autocompleteElement.addEventListener('vcf-autocomplete-value-applied', (event) => {
             expect(event.detail.value).to.be.eq('abc');
             done();
           });

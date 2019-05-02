@@ -18,9 +18,9 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
 <link rel="import" href="../../vaadin-button/vaadin-button.html">
 <link rel="import" href="../../vaadin-lumo-styles/icons.html">
 <link rel="import" href="../../iron-icon/iron-icon.html">
-<link rel="import" href="incubator-autocomplete-overlay.html">
+<link rel="import" href="vcf-autocomplete-overlay.html">
 
-<dom-module id="incubator-autocomplete">
+<dom-module id="vcf-autocomplete">
   <template>
     <style>
       :host {
@@ -32,7 +32,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
       }
 
       [part="options-container"] {
-        min-width: var(--incubator-autocomplete-options-width);
+        min-width: var(--vcf-autocomplete-options-width);
       }
 
       [part="bold"] {
@@ -68,7 +68,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
       </template>
     </vaadin-text-field>
 
-    <incubator-autocomplete-overlay opened="{{opened}}">
+    <vcf-autocomplete-overlay opened="{{opened}}">
       <template>
         <vaadin-list-box
           part="options-container">
@@ -103,29 +103,29 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         </vaadin-list-box>
 
       </template>
-    </incubator-autocomplete-overlay>
+    </vcf-autocomplete-overlay>
 
   </template>
 
   <script>
     (function() {
       /**
-       * `<incubator-autocomplete>` is a template for incubator components.
+       * `<vcf-autocomplete>` is a template for vcf components.
        *
        * ```
-       * <incubator-autocomplete>
-       * </incubator-autocomplete>
+       * <vcf-autocomplete>
+       * </vcf-autocomplete>
        * ```
        *
        * @memberof Vaadin
        * @demo demo/index.html
        */
-      class IncubatorAutocomplete extends Vaadin.ElementMixin(
+      class VcfAutocomplete extends Vaadin.ElementMixin(
         Vaadin.ThemableMixin(
           Polymer.mixinBehaviors(Polymer.IronResizableBehavior, Polymer.Element))) {
 
         static get is() {
-          return 'incubator-autocomplete';
+          return 'vcf-autocomplete';
         }
 
         static get properties() {
@@ -209,7 +209,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           this.addEventListener('iron-resize', this._boundSetOverlayPosition);
           this.addEventListener('click', this._elementClickListener);
           this.addEventListener('keydown', this._onKeyDown.bind(this));
-          this._overlayElement = this.shadowRoot.querySelector('incubator-autocomplete-overlay');
+          this._overlayElement = this.shadowRoot.querySelector('vcf-autocomplete-overlay');
           this._optionsContainer = this._overlayElement.content.querySelector('vaadin-list-box');
 
           this._overlayElement.addEventListener('vaadin-overlay-outside-click', (ev) => ev.preventDefault());
@@ -231,7 +231,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
           this._overlayElement.style.left = inputRect.left + 'px';
           this._overlayElement.style.top = inputRect.bottom + window.pageYOffset + 'px';
 
-          this._overlayElement.updateStyles({'--incubator-autocomplete-options-width': inputRect.width + 'px'});
+          this._overlayElement.updateStyles({'--vcf-autocomplete-options-width': inputRect.width + 'px'});
         }
 
         _outsideClickHandler() {
@@ -256,7 +256,7 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         }
 
         _applyValue(value) {
-          this.dispatchEvent(new CustomEvent('incubator-autocomplete-value-applied', {
+          this.dispatchEvent(new CustomEvent('vcf-autocomplete-value-applied', {
             bubbles: true,
             detail: {
               value: value
@@ -417,15 +417,15 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         }
       }
 
-      customElements.define(IncubatorAutocomplete.is, IncubatorAutocomplete);
+      customElements.define(VcfAutocomplete.is, VcfAutocomplete);
 
       /**
        * @namespace Vaadin
        */
-      window.Vaadin.IncubatorAutocomplete = IncubatorAutocomplete;
+      window.Vaadin.VcfAutocomplete = VcfAutocomplete;
 
       if (window.Vaadin.runIfDevelopmentMode) {
-        window.Vaadin.runIfDevelopmentMode('vaadin-license-checker', IncubatorAutocomplete);
+        window.Vaadin.runIfDevelopmentMode('vaadin-license-checker', VcfAutocomplete);
       }
     })();
   </script>

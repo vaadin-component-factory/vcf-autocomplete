@@ -1,3 +1,3 @@
-window.IncubatorAutocompleteSuites = [
+window.VcfAutocompleteSuites = [
   'basic.html',
 ];
