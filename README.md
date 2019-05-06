@@ -1,27 +1,24 @@
-[![Build Status](https://travis-ci.org/vaadin/vcf-autocomplete.svg?branch=master)](https://travis-ci.org/vaadin/vcf-autocomplete)
+# vcf-autocomplete Web Component
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/vaadin/web-components?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Published on Vaadin  Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/vaadin-component-factoryvcf-autocomplete)
 
-# &lt;vcf-autocomplete&gt;
+&lt;vcf-autocomplete&gt; is a text input with a panel of suggested options.
 
-[Live Demo ↗](https://incubator.app.fi/vcf-autocomplete-demo/index.html)
+[Live Demo ↗](https://incubator.app.fi/autocomplete-demo/autocomplete)
 
-[&lt;vcf-autocomplete&gt;](https://vaadin.com/components/vcf-autocomplete) is a text input with a panel of suggested options.
+[<img src="https://raw.githubusercontent.com/vaadin/incubator-autocomplete/master/screenshot.gif" width="250" alt="Screenshot of vcf-autocomplete">](https://vaadin.com/components/vcf-autocomplete)
 
-&lt;vcf-autocomplete&gt; is built with Vaadin Vcf. To use it, you need to have a access to [Vaadin Vcf](https://vaadin.com/support#incubator), which is included in [Vaadin Prime](https://vaadin.com/pricing).
-
-
+## Usage
+Add &lt;vcf-autocomplete&gt; to the page. In attribute `options` you should declare options that will be offered for user to select. All change listener to the element in which you will update `options` appribute.
 
 ```html
   <vcf-autocomplete id="demo1" label="Choose country" placeholder="Start typing a country name..." options="[[options]]">
   </vcf-autocomplete>
 ```
 
-[<img src="https://raw.githubusercontent.com/vaadin/vcf-autocomplete/master/screenshot.gif" width="200" alt="Screenshot of vcf-autocomplete">](https://vaadin.com/components/vcf-autocomplete)
-
-
 ## Installation
+This components is distributed as Bower packages.
 
-The Vaadin Vcf components are distributed as Bower packages.
 
 ### Polymer 2 and HTML Imports compatible version
 
@@ -89,8 +86,10 @@ We are using [ESLint](http://eslint.org/) for linting JavaScript code. You can c
   - [Submit a pull request](https://www.digitalocean.com/community/tutorials/how-to-create-a-pull-request-on-github) with detailed title and description
   - Wait for response from one of Vaadin components team members
 
+# Vaadin Prime
+This component is available in Vaadin Prime subscription. It is still open source, but you need to have a valid CVAL license in order to use it. Read more at: https://vaadin.com/pricing
 
-## License
+# License
 
 Commercial Vaadin Add-on License version 3 (CVALv3). For license terms, see LICENSE.
 
