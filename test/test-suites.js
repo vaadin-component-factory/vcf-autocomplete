@@ -1,3 +1,0 @@
-window.VcfAutocompleteSuites = [
-  'basic.html',
-];

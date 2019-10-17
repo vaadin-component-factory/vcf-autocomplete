@@ -6,24 +6,921 @@
       "description": "",
       "summary": "",
       "sourceRange": {
-        "file": "src/vcf-autocomplete.html",
+        "file": "src/vcf-autocomplete.js",
         "start": {
-          "line": 44,
-          "column": 6
+          "line": 407,
+          "column": 0
         },
         "end": {
-          "line": 44,
-          "column": 60
+          "line": 407,
+          "column": 48
         }
       },
       "elements": [
         {
-          "description": "`<vcf-autocomplete>` is a template for vcf components.\n\n```\n<vcf-autocomplete>\n</vcf-autocomplete>\n```",
+          "description": "`<vcf-autocomplete>` Web Component with a text input that provides a panel of suggested options.\n\n```html\n<vcf-autocomplete></vcf-autocomplete>\n```",
           "summary": "",
-          "path": "src/vcf-autocomplete.html",
-          "properties": [],
-          "methods": [],
-          "staticMethods": [],
+          "path": "src/vcf-autocomplete.js",
+          "properties": [
+            {
+              "name": "opened",
+              "type": "boolean | null | undefined",
+              "description": "",
+              "privacy": "public",
+              "sourceRange": {
+                "start": {
+                  "line": 114,
+                  "column": 6
+                },
+                "end": {
+                  "line": 119,
+                  "column": 7
+                }
+              },
+              "metadata": {
+                "polymer": {
+                  "observer": "\"_openedChange\"",
+                  "attributeType": "Boolean"
+                }
+              },
+              "defaultValue": "false"
+            },
+            {
+              "name": "value",
+              "type": "string | null | undefined",
+              "description": "",
+              "privacy": "public",
+              "sourceRange": {
+                "start": {
+                  "line": 121,
+                  "column": 6
+                },
+                "end": {
+                  "line": 125,
+                  "column": 7
+                }
+              },
+              "metadata": {
+                "polymer": {
+                  "notify": true,
+                  "observer": "\"_valueChange\"",
+                  "attributeType": "String"
+                }
+              }
+            },
+            {
+              "name": "options",
+              "type": "Array | null | undefined",
+              "description": "",
+              "privacy": "public",
+              "sourceRange": {
+                "start": {
+                  "line": 127,
+                  "column": 6
+                },
+                "end": {
+                  "line": 130,
+                  "column": 7
+                }
+              },
+              "metadata": {
+                "polymer": {
+                  "attributeType": "Array"
+                }
+              },
+              "defaultValue": "[]"
+            },
+            {
+              "name": "limit",
+              "type": "number | null | undefined",
+              "description": "",
+              "privacy": "public",
+              "sourceRange": {
+                "start": {
+                  "line": 132,
+                  "column": 6
+                },
+                "end": {
+                  "line": 135,
+                  "column": 7
+                }
+              },
+              "metadata": {
+                "polymer": {
+                  "attributeType": "Number"
+                }
+              },
+              "defaultValue": "10"
+            },
+            {
+              "name": "loading",
+              "type": "boolean | null | undefined",
+              "description": "",
+              "privacy": "public",
+              "sourceRange": {
+                "start": {
+                  "line": 137,
+                  "column": 6
+                },
+                "end": {
+                  "line": 141,
+                  "column": 7
+                }
+              },
+              "metadata": {
+                "polymer": {
+                  "attributeType": "Boolean"
+                }
+              },
+              "defaultValue": "false"
+            },
+            {
+              "name": "label",
+              "type": "string | null | undefined",
+              "description": "",
+              "privacy": "public",
+              "sourceRange": {
+                "start": {
+                  "line": 143,
+                  "column": 6
+                },
+                "end": {
+                  "line": 145,
+                  "column": 7
+                }
+              },
+              "metadata": {
+                "polymer": {
+                  "attributeType": "String"
+                }
+              }
+            },
+            {
+              "name": "placeholder",
+              "type": "string | null | undefined",
+              "description": "",
+              "privacy": "public",
+              "sourceRange": {
+                "start": {
+                  "line": 147,
+                  "column": 6
+                },
+                "end": {
+                  "line": 149,
+                  "column": 7
+                }
+              },
+              "metadata": {
+                "polymer": {
+                  "attributeType": "String"
+                }
+              }
+            },
+            {
+              "name": "_limitedOptions",
+              "type": "Array | null | undefined",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 151,
+                  "column": 6
+                },
+                "end": {
+                  "line": 153,
+                  "column": 7
+                }
+              },
+              "metadata": {
+                "polymer": {
+                  "attributeType": "Array"
+                }
+              }
+            },
+            {
+              "name": "_savedValue",
+              "type": "string | null | undefined",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 155,
+                  "column": 6
+                },
+                "end": {
+                  "line": 157,
+                  "column": 7
+                }
+              },
+              "metadata": {
+                "polymer": {
+                  "attributeType": "String"
+                }
+              }
+            },
+            {
+              "name": "_overlayElement",
+              "type": "Object | null | undefined",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 159,
+                  "column": 6
+                },
+                "end": {
+                  "line": 159,
+                  "column": 29
+                }
+              },
+              "metadata": {
+                "polymer": {
+                  "attributeType": "Object"
+                }
+              }
+            },
+            {
+              "name": "_optionsContainer",
+              "type": "Object | null | undefined",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 160,
+                  "column": 6
+                },
+                "end": {
+                  "line": 160,
+                  "column": 31
+                }
+              },
+              "metadata": {
+                "polymer": {
+                  "attributeType": "Object"
+                }
+              }
+            },
+            {
+              "name": "_selectedOption",
+              "type": "Object | null | undefined",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 161,
+                  "column": 6
+                },
+                "end": {
+                  "line": 161,
+                  "column": 29
+                }
+              },
+              "metadata": {
+                "polymer": {
+                  "attributeType": "Object"
+                }
+              }
+            },
+            {
+              "name": "_boundOutsideClickHandler",
+              "type": "Object | null | undefined",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 162,
+                  "column": 6
+                },
+                "end": {
+                  "line": 162,
+                  "column": 39
+                }
+              },
+              "metadata": {
+                "polymer": {
+                  "attributeType": "Object"
+                }
+              }
+            },
+            {
+              "name": "_boundSetOverlayPosition",
+              "type": "Object | null | undefined",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 163,
+                  "column": 6
+                },
+                "end": {
+                  "line": 163,
+                  "column": 38
+                }
+              },
+              "metadata": {
+                "polymer": {
+                  "attributeType": "Object"
+                }
+              }
+            }
+          ],
+          "methods": [
+            {
+              "name": "ready",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 183,
+                  "column": 2
+                },
+                "end": {
+                  "line": 194,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [],
+              "return": {
+                "type": "void"
+              }
+            },
+            {
+              "name": "connectedCallback",
+              "description": "",
+              "privacy": "public",
+              "sourceRange": {
+                "start": {
+                  "line": 177,
+                  "column": 2
+                },
+                "end": {
+                  "line": 181,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [],
+              "return": {
+                "type": "void"
+              }
+            },
+            {
+              "name": "disconnectedCallback",
+              "description": "",
+              "privacy": "public",
+              "sourceRange": {
+                "start": {
+                  "line": 196,
+                  "column": 2
+                },
+                "end": {
+                  "line": 200,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [],
+              "return": {
+                "type": "void"
+              }
+            },
+            {
+              "name": "_elementClickListener",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 202,
+                  "column": 2
+                },
+                "end": {
+                  "line": 204,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "event"
+                }
+              ],
+              "return": {
+                "type": "void"
+              }
+            },
+            {
+              "name": "_setOverlayPosition",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 206,
+                  "column": 2
+                },
+                "end": {
+                  "line": 213,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [],
+              "return": {
+                "type": "void"
+              }
+            },
+            {
+              "name": "_outsideClickHandler",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 215,
+                  "column": 2
+                },
+                "end": {
+                  "line": 217,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [],
+              "return": {
+                "type": "void"
+              }
+            },
+            {
+              "name": "_valueChange",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 219,
+                  "column": 2
+                },
+                "end": {
+                  "line": 230,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "value"
+                }
+              ],
+              "return": {
+                "type": "void"
+              }
+            },
+            {
+              "name": "_optionClicked",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 232,
+                  "column": 2
+                },
+                "end": {
+                  "line": 234,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "ev"
+                }
+              ],
+              "return": {
+                "type": "void"
+              }
+            },
+            {
+              "name": "_applyValue",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 236,
+                  "column": 2
+                },
+                "end": {
+                  "line": 249,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "value"
+                }
+              ],
+              "return": {
+                "type": "void"
+              }
+            },
+            {
+              "name": "_textFieldFocused",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 251,
+                  "column": 2
+                },
+                "end": {
+                  "line": 255,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [],
+              "return": {
+                "type": "void"
+              }
+            },
+            {
+              "name": "_hasValue",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 257,
+                  "column": 2
+                },
+                "end": {
+                  "line": 259,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "value"
+                }
+              ]
+            },
+            {
+              "name": "_optionsChange",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 261,
+                  "column": 2
+                },
+                "end": {
+                  "line": 263,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "options"
+                }
+              ],
+              "return": {
+                "type": "void"
+              }
+            },
+            {
+              "name": "clear",
+              "description": "",
+              "privacy": "public",
+              "sourceRange": {
+                "start": {
+                  "line": 265,
+                  "column": 2
+                },
+                "end": {
+                  "line": 268,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [],
+              "return": {
+                "type": "void"
+              }
+            },
+            {
+              "name": "_getInputtedPart",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 270,
+                  "column": 2
+                },
+                "end": {
+                  "line": 276,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "value"
+                },
+                {
+                  "name": "option"
+                }
+              ]
+            },
+            {
+              "name": "_getSuggestedPart",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 278,
+                  "column": 2
+                },
+                "end": {
+                  "line": 284,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "value"
+                },
+                {
+                  "name": "option"
+                }
+              ]
+            },
+            {
+              "name": "_onKeyDown",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 286,
+                  "column": 2
+                },
+                "end": {
+                  "line": 314,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "event"
+                }
+              ],
+              "return": {
+                "type": "void"
+              }
+            },
+            {
+              "name": "_navigate",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 316,
+                  "column": 2
+                },
+                "end": {
+                  "line": 367,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "to"
+                }
+              ]
+            },
+            {
+              "name": "_selectedOptionChanged",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 369,
+                  "column": 2
+                },
+                "end": {
+                  "line": 375,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "selectedOption"
+                }
+              ],
+              "return": {
+                "type": "void"
+              }
+            },
+            {
+              "name": "_changeTextFieldValue",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 377,
+                  "column": 2
+                },
+                "end": {
+                  "line": 385,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "newValue"
+                }
+              ],
+              "return": {
+                "type": "void"
+              }
+            },
+            {
+              "name": "_onInput",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 387,
+                  "column": 2
+                },
+                "end": {
+                  "line": 389,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "event"
+                }
+              ],
+              "return": {
+                "type": "void"
+              }
+            },
+            {
+              "name": "_noResultsShown",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 391,
+                  "column": 2
+                },
+                "end": {
+                  "line": 393,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "options"
+                },
+                {
+                  "name": "loading"
+                }
+              ]
+            },
+            {
+              "name": "_openedChange",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "start": {
+                  "line": 395,
+                  "column": 2
+                },
+                "end": {
+                  "line": 399,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "opened"
+                }
+              ],
+              "return": {
+                "type": "void"
+              }
+            }
+          ],
+          "staticMethods": [
+            {
+              "name": "_finalizeClass",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "file": "../../@vaadin/vaadin-element-mixin/vaadin-element-mixin.js",
+                "start": {
+                  "line": 28,
+                  "column": 2
+                },
+                "end": {
+                  "line": 44,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [],
+              "return": {
+                "type": "void"
+              },
+              "inheritedFrom": "ElementMixin"
+            },
+            {
+              "name": "finalize",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "file": "../../@vaadin/vaadin-themable-mixin/vaadin-themable-mixin.js",
+                "start": {
+                  "line": 10,
+                  "column": 2
+                },
+                "end": {
+                  "line": 25,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [],
+              "return": {
+                "type": "void"
+              },
+              "inheritedFrom": "ThemableMixin"
+            },
+            {
+              "name": "_includeMatchingThemes",
+              "description": "",
+              "privacy": "protected",
+              "sourceRange": {
+                "file": "../../@vaadin/vaadin-themable-mixin/vaadin-themable-mixin.js",
+                "start": {
+                  "line": 28,
+                  "column": 2
+                },
+                "end": {
+                  "line": 73,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "template"
+                }
+              ],
+              "return": {
+                "type": "void"
+              },
+              "inheritedFrom": "ThemableMixin"
+            },
+            {
+              "name": "_includeStyle",
+              "description": "",
+              "privacy": "private",
+              "sourceRange": {
+                "file": "../../@vaadin/vaadin-themable-mixin/vaadin-themable-mixin.js",
+                "start": {
+                  "line": 76,
+                  "column": 2
+                },
+                "end": {
+                  "line": 82,
+                  "column": 3
+                }
+              },
+              "metadata": {},
+              "params": [
+                {
+                  "name": "moduleName"
+                },
+                {
+                  "name": "template"
+                }
+              ],
+              "return": {
+                "type": "void"
+              },
+              "inheritedFrom": "ThemableMixin"
+            }
+          ],
           "demos": [
             {
               "url": "demo/index.html",
@@ -34,26 +931,1927 @@
           "sourceRange": {
             "start": {
               "line": 33,
-              "column": 6
+              "column": 0
             },
             "end": {
-              "line": 37,
-              "column": 7
+              "line": 400,
+              "column": 1
             }
           },
           "privacy": "public",
           "superclass": "HTMLElement",
           "name": "Vaadin.VcfAutocomplete",
-          "attributes": [],
-          "events": [],
+          "attributes": [
+            {
+              "name": "opened",
+              "description": "",
+              "sourceRange": {
+                "start": {
+                  "line": 114,
+                  "column": 6
+                },
+                "end": {
+                  "line": 119,
+                  "column": 7
+                }
+              },
+              "metadata": {},
+              "type": "boolean | null | undefined"
+            },
+            {
+              "name": "value",
+              "description": "",
+              "sourceRange": {
+                "start": {
+                  "line": 121,
+                  "column": 6
+                },
+                "end": {
+                  "line": 125,
+                  "column": 7
+                }
+              },
+              "metadata": {},
+              "type": "string | null | undefined"
+            },
+            {
+              "name": "options",
+              "description": "",
+              "sourceRange": {
+                "start": {
+                  "line": 127,
+                  "column": 6
+                },
+                "end": {
+                  "line": 130,
+                  "column": 7
+                }
+              },
+              "metadata": {},
+              "type": "Array | null | undefined"
+            },
+            {
+              "name": "limit",
+              "description": "",
+              "sourceRange": {
+                "start": {
+                  "line": 132,
+                  "column": 6
+                },
+                "end": {
+                  "line": 135,
+                  "column": 7
+                }
+              },
+              "metadata": {},
+              "type": "number | null | undefined"
+            },
+            {
+              "name": "loading",
+              "description": "",
+              "sourceRange": {
+                "start": {
+                  "line": 137,
+                  "column": 6
+                },
+                "end": {
+                  "line": 141,
+                  "column": 7
+                }
+              },
+              "metadata": {},
+              "type": "boolean | null | undefined"
+            },
+            {
+              "name": "label",
+              "description": "",
+              "sourceRange": {
+                "start": {
+                  "line": 143,
+                  "column": 6
+                },
+                "end": {
+                  "line": 145,
+                  "column": 7
+                }
+              },
+              "metadata": {},
+              "type": "string | null | undefined"
+            },
+            {
+              "name": "placeholder",
+              "description": "",
+              "sourceRange": {
+                "start": {
+                  "line": 147,
+                  "column": 6
+                },
+                "end": {
+                  "line": 149,
+                  "column": 7
+                }
+              },
+              "metadata": {},
+              "type": "string | null | undefined"
+            }
+          ],
+          "events": [
+            {
+              "type": "CustomEvent",
+              "name": "value-changed",
+              "description": "Fired when the `value` property changes.",
+              "metadata": {}
+            }
+          ],
           "styling": {
             "cssVariables": [],
             "selectors": []
           },
           "slots": [],
-          "tagname": "vcf-autocomplete"
+          "tagname": "vcf-autocomplete",
+          "mixins": [
+            "ElementMixin",
+            "ThemableMixin"
+          ]
         }
       ]
+    }
+  ],
+  "elements": [
+    {
+      "description": "`<vcf-autocomplete-overlay>` The autocomplete overlay element.\n\n```html\n<vcf-autocomplete-overlay></vcf-autocomplete-overlay>\n```\n\n### Styling\n\nSee [`<vaadin-overlay>` documentation](https://github.com/vaadin/vaadin-overlay/blob/master/src/vaadin-overlay.html)\nfor `<vaadin-dropdown-menu-overlay>` parts.\n\nSee [ThemableMixin – how to apply styles for shadow parts](https://github.com/vaadin/vaadin-themable-mixin/wiki)",
+      "summary": "",
+      "path": "src/vcf-autocomplete-overlay.js",
+      "properties": [
+        {
+          "name": "_last",
+          "type": "?",
+          "description": "returns true if this is the last one in the opened overlays stack\n   ",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 675,
+              "column": 2
+            },
+            "end": {
+              "line": 677,
+              "column": 3
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": true
+            }
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "opened",
+          "type": "boolean | null | undefined",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 245,
+              "column": 6
+            },
+            "end": {
+              "line": 250,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true,
+              "observer": "\"_openedChanged\"",
+              "attributeType": "Boolean"
+            }
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "owner",
+          "type": "Element | null | undefined",
+          "description": "Owner element passed with renderer function",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 255,
+              "column": 6
+            },
+            "end": {
+              "line": 255,
+              "column": 20
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "attributeType": "Element"
+            }
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "renderer",
+          "type": "Function | null | undefined",
+          "description": "Custom function for rendering the content of the overlay.\nReceives three arguments:\n\n- `root` The root container DOM element. Append your content to it.\n- `owner` The host element of the renderer function.\n- `model` The object with the properties related with rendering.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 265,
+              "column": 6
+            },
+            "end": {
+              "line": 265,
+              "column": 24
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "attributeType": "Function"
+            }
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "template",
+          "type": "Object | null | undefined",
+          "description": "The template of the overlay content.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 270,
+              "column": 6
+            },
+            "end": {
+              "line": 273,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true,
+              "attributeType": "Object"
+            }
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "instanceProps",
+          "type": "Object | null | undefined",
+          "description": "Optional argument for `Polymer.Templatize.templatize`.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 278,
+              "column": 6
+            },
+            "end": {
+              "line": 280,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "attributeType": "Object"
+            }
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "content",
+          "type": "Object | null | undefined",
+          "description": "References the content container after the template is stamped.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 285,
+              "column": 6
+            },
+            "end": {
+              "line": 288,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true,
+              "attributeType": "Object"
+            }
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "withBackdrop",
+          "type": "boolean | null | undefined",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 290,
+              "column": 6
+            },
+            "end": {
+              "line": 294,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "attributeType": "Boolean"
+            }
+          },
+          "defaultValue": "false",
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "model",
+          "type": "Object | null | undefined",
+          "description": "Object with properties that is passed to `renderer` function",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 299,
+              "column": 6
+            },
+            "end": {
+              "line": 299,
+              "column": 19
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "attributeType": "Object"
+            }
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "modeless",
+          "type": "boolean | null | undefined",
+          "description": "When true the overlay won't disable the main content, showing\nit doesn’t change the functionality of the user interface.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 305,
+              "column": 6
+            },
+            "end": {
+              "line": 310,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_modelessChanged\"",
+              "attributeType": "Boolean"
+            }
+          },
+          "defaultValue": "false",
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "hidden",
+          "type": "boolean | null | undefined",
+          "description": "When set to true, the overlay is hidden. This also closes the overlay\nimmediately in case there is a closing animation in progress.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 316,
+              "column": 6
+            },
+            "end": {
+              "line": 320,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_hiddenChanged\"",
+              "attributeType": "Boolean"
+            }
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "focusTrap",
+          "type": "boolean | null | undefined",
+          "description": "When true move focus to the first focusable element in the overlay,\nor to the overlay if there are no focusable elements.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 326,
+              "column": 6
+            },
+            "end": {
+              "line": 329,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "attributeType": "Boolean"
+            }
+          },
+          "defaultValue": "false",
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "restoreFocusOnClose",
+          "type": "boolean | null | undefined",
+          "description": "Set to true to enable restoring of focus when overlay is closed.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 334,
+              "column": 6
+            },
+            "end": {
+              "line": 337,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "attributeType": "Boolean"
+            }
+          },
+          "defaultValue": "false",
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_mouseDownInside",
+          "type": "boolean | null | undefined",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 339,
+              "column": 6
+            },
+            "end": {
+              "line": 341,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "attributeType": "Boolean"
+            }
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_mouseUpInside",
+          "type": "boolean | null | undefined",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 343,
+              "column": 6
+            },
+            "end": {
+              "line": 345,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "attributeType": "Boolean"
+            }
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_instance",
+          "type": "Object | null | undefined",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 347,
+              "column": 6
+            },
+            "end": {
+              "line": 349,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "attributeType": "Object"
+            }
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_originalContentPart",
+          "type": "Object | null | undefined",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 351,
+              "column": 6
+            },
+            "end": {
+              "line": 351,
+              "column": 34
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "attributeType": "Object"
+            }
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_contentNodes",
+          "type": "Array | null | undefined",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 353,
+              "column": 6
+            },
+            "end": {
+              "line": 353,
+              "column": 26
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "attributeType": "Array"
+            }
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_oldOwner",
+          "type": "Element | null | undefined",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 355,
+              "column": 6
+            },
+            "end": {
+              "line": 355,
+              "column": 24
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "attributeType": "Element"
+            }
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_oldModel",
+          "type": "Object | null | undefined",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 357,
+              "column": 6
+            },
+            "end": {
+              "line": 357,
+              "column": 23
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "attributeType": "Object"
+            }
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_oldTemplate",
+          "type": "Object | null | undefined",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 359,
+              "column": 6
+            },
+            "end": {
+              "line": 359,
+              "column": 26
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "attributeType": "Object"
+            }
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_oldInstanceProps",
+          "type": "Object | null | undefined",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 361,
+              "column": 6
+            },
+            "end": {
+              "line": 361,
+              "column": 31
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "attributeType": "Object"
+            }
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_oldRenderer",
+          "type": "Object | null | undefined",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 363,
+              "column": 6
+            },
+            "end": {
+              "line": 363,
+              "column": 26
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "attributeType": "Object"
+            }
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_oldOpened",
+          "type": "boolean | null | undefined",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 365,
+              "column": 6
+            },
+            "end": {
+              "line": 365,
+              "column": 25
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "attributeType": "Boolean"
+            }
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        }
+      ],
+      "methods": [
+        {
+          "name": "ready",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 394,
+              "column": 2
+            },
+            "end": {
+              "line": 405,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_detectIosNavbar",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 407,
+              "column": 2
+            },
+            "end": {
+              "line": 424,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_setTemplateFromNodes",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 426,
+              "column": 2
+            },
+            "end": {
+              "line": 428,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "nodes"
+            }
+          ],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "close",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 434,
+              "column": 2
+            },
+            "end": {
+              "line": 440,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "sourceEvent"
+            }
+          ],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "connectedCallback",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 442,
+              "column": 2
+            },
+            "end": {
+              "line": 449,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "disconnectedCallback",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 451,
+              "column": 2
+            },
+            "end": {
+              "line": 455,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_ironOverlayCanceled",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 457,
+              "column": 2
+            },
+            "end": {
+              "line": 459,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "event"
+            }
+          ],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_mouseDownListener",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 461,
+              "column": 2
+            },
+            "end": {
+              "line": 463,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "event"
+            }
+          ],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_mouseUpListener",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 465,
+              "column": 2
+            },
+            "end": {
+              "line": 467,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "event"
+            }
+          ],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_outsideClickListener",
+          "description": "We need to listen on 'click' / 'tap' event and capture it and close the overlay before\npropagating the event to the listener in the button. Otherwise, if the clicked button would call\nopen(), this would happen: https://www.youtube.com/watch?v=Z86V_ICUCD4",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 477,
+              "column": 2
+            },
+            "end": {
+              "line": 494,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "event"
+            }
+          ],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_keydownListener",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 500,
+              "column": 2
+            },
+            "end": {
+              "line": 521,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "event"
+            }
+          ],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_ensureTemplatized",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 523,
+              "column": 2
+            },
+            "end": {
+              "line": 525,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_openedChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 531,
+              "column": 2
+            },
+            "end": {
+              "line": 560,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "opened"
+            },
+            {
+              "name": "wasOpened"
+            }
+          ],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_hiddenChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 562,
+              "column": 2
+            },
+            "end": {
+              "line": 566,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "hidden"
+            }
+          ],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_shouldAnimate",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 568,
+              "column": 2
+            },
+            "end": {
+              "line": 572,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_enqueueAnimation",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 574,
+              "column": 2
+            },
+            "end": {
+              "line": 583,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "type"
+            },
+            {
+              "name": "callback"
+            }
+          ],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_flushAnimation",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 585,
+              "column": 2
+            },
+            "end": {
+              "line": 590,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "type"
+            }
+          ],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_animatedOpening",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 592,
+              "column": 2
+            },
+            "end": {
+              "line": 613,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_attachOverlay",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 615,
+              "column": 2
+            },
+            "end": {
+              "line": 619,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_animatedClosing",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 621,
+              "column": 2
+            },
+            "end": {
+              "line": 658,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_detachOverlay",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 660,
+              "column": 2
+            },
+            "end": {
+              "line": 663,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_modelessChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 679,
+              "column": 2
+            },
+            "end": {
+              "line": 689,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "modeless"
+            }
+          ],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_addGlobalListeners",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 691,
+              "column": 2
+            },
+            "end": {
+              "line": 698,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_enterModalState",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 700,
+              "column": 2
+            },
+            "end": {
+              "line": 714,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_removeGlobalListeners",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 716,
+              "column": 2
+            },
+            "end": {
+              "line": 721,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_exitModalState",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 723,
+              "column": 2
+            },
+            "end": {
+              "line": 745,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_removeOldContent",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 747,
+              "column": 2
+            },
+            "end": {
+              "line": 771,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_stampOverlayTemplate",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 773,
+              "column": 2
+            },
+            "end": {
+              "line": 844,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "template"
+            },
+            {
+              "name": "instanceProps"
+            }
+          ],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_removeNewRendererOrTemplate",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 846,
+              "column": 2
+            },
+            "end": {
+              "line": 852,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "template"
+            },
+            {
+              "name": "oldTemplate"
+            },
+            {
+              "name": "renderer"
+            },
+            {
+              "name": "oldRenderer"
+            }
+          ],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "render",
+          "description": "Manually invoke existing renderer.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 857,
+              "column": 2
+            },
+            "end": {
+              "line": 861,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_templateOrRendererChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 863,
+              "column": 2
+            },
+            "end": {
+              "line": 898,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "template"
+            },
+            {
+              "name": "renderer"
+            },
+            {
+              "name": "owner"
+            },
+            {
+              "name": "model"
+            },
+            {
+              "name": "instanceProps"
+            },
+            {
+              "name": "opened"
+            }
+          ],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_isFocused",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 900,
+              "column": 2
+            },
+            "end": {
+              "line": 902,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "element"
+            }
+          ],
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_focusedIndex",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 904,
+              "column": 2
+            },
+            "end": {
+              "line": 907,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "elements"
+            }
+          ],
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_cycleTab",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 909,
+              "column": 2
+            },
+            "end": {
+              "line": 927,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "increment"
+            },
+            {
+              "name": "index"
+            }
+          ],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_getFocusableElements",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 929,
+              "column": 2
+            },
+            "end": {
+              "line": 932,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_getActiveElement",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 934,
+              "column": 2
+            },
+            "end": {
+              "line": 948,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "_deepContains",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 950,
+              "column": 2
+            },
+            "end": {
+              "line": 961,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "node"
+            }
+          ],
+          "inheritedFrom": "Vaadin.OverlayElement"
+        }
+      ],
+      "staticMethods": [],
+      "demos": [
+        {
+          "url": "demo/index.html",
+          "description": ""
+        }
+      ],
+      "metadata": {},
+      "sourceRange": {
+        "start": {
+          "line": 50,
+          "column": 0
+        },
+        "end": {
+          "line": 54,
+          "column": 1
+        }
+      },
+      "privacy": "public",
+      "superclass": "OverlayElement",
+      "name": "AutocompleteOverlayElement",
+      "attributes": [
+        {
+          "name": "opened",
+          "description": "",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 245,
+              "column": 6
+            },
+            "end": {
+              "line": 250,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "boolean | null | undefined",
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "owner",
+          "description": "Owner element passed with renderer function",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 255,
+              "column": 6
+            },
+            "end": {
+              "line": 255,
+              "column": 20
+            }
+          },
+          "metadata": {},
+          "type": "Element | null | undefined",
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "renderer",
+          "description": "Custom function for rendering the content of the overlay.\nReceives three arguments:\n\n- `root` The root container DOM element. Append your content to it.\n- `owner` The host element of the renderer function.\n- `model` The object with the properties related with rendering.",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 265,
+              "column": 6
+            },
+            "end": {
+              "line": 265,
+              "column": 24
+            }
+          },
+          "metadata": {},
+          "type": "Function | null | undefined",
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "template",
+          "description": "The template of the overlay content.",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 270,
+              "column": 6
+            },
+            "end": {
+              "line": 273,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "Object | null | undefined",
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "instance-props",
+          "description": "Optional argument for `Polymer.Templatize.templatize`.",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 278,
+              "column": 6
+            },
+            "end": {
+              "line": 280,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "Object | null | undefined",
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "content",
+          "description": "References the content container after the template is stamped.",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 285,
+              "column": 6
+            },
+            "end": {
+              "line": 288,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "Object | null | undefined",
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "with-backdrop",
+          "description": "",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 290,
+              "column": 6
+            },
+            "end": {
+              "line": 294,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "boolean | null | undefined",
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "model",
+          "description": "Object with properties that is passed to `renderer` function",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 299,
+              "column": 6
+            },
+            "end": {
+              "line": 299,
+              "column": 19
+            }
+          },
+          "metadata": {},
+          "type": "Object | null | undefined",
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "modeless",
+          "description": "When true the overlay won't disable the main content, showing\nit doesn’t change the functionality of the user interface.",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 305,
+              "column": 6
+            },
+            "end": {
+              "line": 310,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "boolean | null | undefined",
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "hidden",
+          "description": "When set to true, the overlay is hidden. This also closes the overlay\nimmediately in case there is a closing animation in progress.",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 316,
+              "column": 6
+            },
+            "end": {
+              "line": 320,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "boolean | null | undefined",
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "focus-trap",
+          "description": "When true move focus to the first focusable element in the overlay,\nor to the overlay if there are no focusable elements.",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 326,
+              "column": 6
+            },
+            "end": {
+              "line": 329,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "boolean | null | undefined",
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "name": "restore-focus-on-close",
+          "description": "Set to true to enable restoring of focus when overlay is closed.",
+          "sourceRange": {
+            "file": "../../@vaadin/vaadin-overlay/src/vaadin-overlay.js",
+            "start": {
+              "line": 334,
+              "column": 6
+            },
+            "end": {
+              "line": 337,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "boolean | null | undefined",
+          "inheritedFrom": "Vaadin.OverlayElement"
+        }
+      ],
+      "events": [
+        {
+          "type": "CustomEvent",
+          "name": "vaadin-overlay-close",
+          "description": "vaadin-overlay-close\nfired before the `vaadin-overlay` will be closed. If canceled the closing of the overlay is canceled as well.",
+          "metadata": {},
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "type": "CustomEvent",
+          "name": "vaadin-overlay-escape-press",
+          "description": "vaadin-overlay-escape-press\nfired before the `vaadin-overlay` will be closed on ESC button press. If canceled the closing of the overlay is canceled as well.",
+          "metadata": {},
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "type": "CustomEvent",
+          "name": "vaadin-overlay-open",
+          "description": "vaadin-overlay-open\nfired after the `vaadin-overlay` is opened.",
+          "metadata": {},
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "type": "CustomEvent",
+          "name": "vaadin-overlay-outside-click",
+          "description": "We need to listen on 'click' / 'tap' event and capture it and close the overlay before\npropagating the event to the listener in the button. Otherwise, if the clicked button would call\nopen(), this would happen: https://www.youtube.com/watch?v=Z86V_ICUCD4",
+          "metadata": {},
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "type": "CustomEvent",
+          "name": "opened-changed",
+          "description": "Fired when the `opened` property changes.",
+          "metadata": {},
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "type": "CustomEvent",
+          "name": "template-changed",
+          "description": "Fired when the `template` property changes.",
+          "metadata": {},
+          "inheritedFrom": "Vaadin.OverlayElement"
+        },
+        {
+          "type": "CustomEvent",
+          "name": "content-changed",
+          "description": "Fired when the `content` property changes.",
+          "metadata": {},
+          "inheritedFrom": "Vaadin.OverlayElement"
+        }
+      ],
+      "styling": {
+        "cssVariables": [],
+        "selectors": []
+      },
+      "slots": [],
+      "tagname": "vcf-autocomplete-overlay"
     }
   ]
 }
