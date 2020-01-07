@@ -11,6 +11,7 @@ import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 import { ThemableMixin } from '@vaadin/vaadin-themable-mixin';
 import { ElementMixin } from '@vaadin/vaadin-element-mixin';
 import { IronResizableBehavior } from '@polymer/iron-resizable-behavior';
+import '@vaadin/vaadin-license-checker/vaadin-license-checker';
 import '@vaadin/vaadin-text-field';
 import '@vaadin/vaadin-list-box';
 import '@vaadin/vaadin-item';
@@ -163,6 +164,19 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(mixinBehaviors([IronRes
       _boundOutsideClickHandler: Object,
       _boundSetOverlayPosition: Object
     };
+  }
+
+  /**
+   * @protected
+   */
+  static _finalizeClass() {
+    super._finalizeClass();
+
+    const devModeCallback = window.Vaadin.developmentModeCallback;
+    const licenseChecker = devModeCallback && devModeCallback['vaadin-license-checker'];
+    if (typeof licenseChecker === 'function') {
+      licenseChecker(VcfAutocomplete);
+    }
   }
 
   static get observers() {
@@ -406,7 +420,3 @@ customElements.define(VcfAutocomplete.is, VcfAutocomplete);
  * @namespace Vaadin
  */
 window.Vaadin.VcfAutocomplete = VcfAutocomplete;
-
-if (window.Vaadin.runIfDevelopmentMode) {
-  window.Vaadin.runIfDevelopmentMode('vaadin-license-checker', VcfAutocomplete);
-}
