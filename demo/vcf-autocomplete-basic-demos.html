@@ -9,8 +9,7 @@
     <h3>Demo sample</h3>
     <vaadin-demo-snippet id="vcf-autocomplete-demo-sample">
       <template preserve-content>
-        <vcf-autocomplete id="demo1" label="Choose country" placeholder="Start typing a country name...">
-        </vcf-autocomplete>
+        <vcf-autocomplete id="demo1" label="Choose country" placeholder="Start typing a country name..."> </vcf-autocomplete>
 
         <div>
           Last applied value:
@@ -21,7 +20,7 @@
         <script>
           function getData(callback) {
             var xhr = new XMLHttpRequest();
-            xhr.onload = function() {
+            xhr.onload = function () {
               callback(JSON.parse(xhr.responseText));
             };
 
@@ -32,7 +31,7 @@
             xhr.send();
           }
 
-          window.addDemoReadyListener('#vcf-autocomplete-demo-sample', function(document) {
+          window.addDemoReadyListener('#vcf-autocomplete-demo-sample', function (document) {
             const autocompleteElement = document.querySelector('#demo1');
             let countries = [];
 
@@ -42,7 +41,7 @@
 
             autocompleteElement.addEventListener('value-changed', (ev) => {
               if (countries.length) {
-                autocompleteElement.options = countries.filter(country => country.toLowerCase().indexOf(ev.detail.value.toLowerCase()) === 0);
+                autocompleteElement.options = countries.filter((country) => country.toLowerCase().indexOf(ev.detail.value.toLowerCase()) >= 0);
               }
             });
 
@@ -57,23 +56,19 @@
     <h3>Slow API demo</h3>
     <vaadin-demo-snippet id="vcf-autocomplete-demo-slow-api">
       <template preserve-content>
-        <vcf-autocomplete
-          id="demo2"
-          label="Choose country"
-          placeholder="Start typing a country name...">
-        </vcf-autocomplete>
+        <vcf-autocomplete id="demo2" label="Choose country" placeholder="Start typing a country name..."> </vcf-autocomplete>
 
         <script>
           let countries = [];
 
           function filterByValue(items, value) {
-            return items.filter(item => item.toLowerCase().indexOf(value.toLowerCase()) === 0);
+            return items.filter((item) => item.toLowerCase().indexOf(value.toLowerCase()) === 0);
           }
 
           function getDataDefer(callback, value) {
             if (!countries.length) {
               var xhr = new XMLHttpRequest();
-              xhr.onload = function() {
+              xhr.onload = function () {
                 countries = JSON.parse(xhr.responseText);
 
                 setTimeout(() => callback(filterByValue(countries, value)), 1000);
@@ -89,7 +84,7 @@
             }
           }
 
-          window.addDemoReadyListener('#vcf-autocomplete-demo-slow-api', function(document) {
+          window.addDemoReadyListener('#vcf-autocomplete-demo-slow-api', function (document) {
             const autocompleteElement = document.querySelector('#demo2');
 
             autocompleteElement.addEventListener('value-changed', (ev) => {
