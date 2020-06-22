@@ -63,13 +63,7 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(mixinBehaviors([IronRes
 
       <vaadin-text-field id="textField" on-focus="_textFieldFocused" label="[[label]]" placeholder="[[placeholder]]">
         <template is="dom-if" if="[[_hasValue(value)]]">
-          <vaadin-button
-            part="clear"
-            theme="icon tertiary small"
-            aria-label="Add new item"
-            slot="suffix"
-            on-click="clear"
-          >
+          <vaadin-button part="clear" theme="icon tertiary small" aria-label="Add new item" slot="suffix" on-click="clear">
             <iron-icon icon="lumo:cross"> </iron-icon>
           </vaadin-button>
         </template>
@@ -81,7 +75,7 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(mixinBehaviors([IronRes
             <template is="dom-if" if="[[!loading]]">
               <template is="dom-repeat" items="[[_limitedOptions]]" as="option">
                 <vaadin-item on-click="_optionClicked" part="option">
-                  <span part="bold">[[_getInputtedPart(value, option)]]</span>[[_getSuggestedPart(value, option)]]
+                  [[_getSuggestedStart(value, option)]]<span part="bold">[[_getInputtedPart(value, option)]]</span>[[_getSuggestedEnd(value, option)]]
                 </vaadin-item>
               </template>
             </template>
@@ -282,20 +276,32 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(mixinBehaviors([IronRes
     this.$.textField.focus();
   }
 
+  _getSuggestedStart(value, option) {
+    if (!value) {
+      return;
+    }
+
+    return option.substr(0, this._getValueIndex(value, option));
+  }
+
   _getInputtedPart(value, option) {
     if (!value) {
       return option;
     }
 
-    return option.substr(0, value.length);
+    return option.substr(this._getValueIndex(value, option), value.length);
   }
 
-  _getSuggestedPart(value, option) {
+  _getSuggestedEnd(value, option) {
     if (!value) {
       return;
     }
 
-    return option.substr(value.length, option.length);
+    return option.substr(this._getValueIndex(value, option) + value.length, option.length);
+  }
+
+  _getValueIndex(value, option) {
+    return option.indexOf(value) >= 0 ? option.indexOf(value) : 0;
   }
 
   _onKeyDown(event) {

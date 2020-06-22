@@ -31,8 +31,7 @@
       <h3>Demo sample</h3>
       <demo-snippet>
         <template>
-          <vcf-autocomplete id="demo1" label="Choose country" placeholder="Start typing a country name...">
-          </vcf-autocomplete>
+          <vcf-autocomplete id="demo1" label="Choose country" placeholder="Start typing a country name..."> </vcf-autocomplete>
 
           <div>
             Last applied value:
@@ -44,7 +43,7 @@
           <script>
             function getData(callback) {
               var xhr = new XMLHttpRequest();
-              xhr.onload = function() {
+              xhr.onload = function () {
                 callback(JSON.parse(xhr.responseText));
               };
               var url = 'https://demo.vaadin.com/demo-data/1.0/countries';
@@ -56,19 +55,17 @@
               const autocompleteElement = document.querySelector('#demo1');
               let countries = [];
 
-              getData(result => {
+              getData((result) => {
                 countries = result;
               });
 
-              autocompleteElement.addEventListener('value-changed', ev => {
+              autocompleteElement.addEventListener('value-changed', (ev) => {
                 if (countries.length) {
-                  autocompleteElement.options = countries.filter(
-                    country => country.toLowerCase().indexOf(ev.detail.value.toLowerCase()) === 0
-                  );
+                  autocompleteElement.options = countries.filter((country) => country.toLowerCase().indexOf(ev.detail.value.toLowerCase()) >= 0);
                 }
               });
 
-              autocompleteElement.addEventListener('vcf-autocomplete-value-applied', ev => {
+              autocompleteElement.addEventListener('vcf-autocomplete-value-applied', (ev) => {
                 document.getElementById('lastAppliedValue').textContent = ev.detail.value;
               });
             });
@@ -79,20 +76,19 @@
       <h3>Slow API demo</h3>
       <demo-snippet>
         <template>
-          <vcf-autocomplete id="demo2" label="Choose country" placeholder="Start typing a country name...">
-          </vcf-autocomplete>
+          <vcf-autocomplete id="demo2" label="Choose country" placeholder="Start typing a country name..."> </vcf-autocomplete>
 
           <script>
             let countries = [];
 
             function filterByValue(items, value) {
-              return items.filter(item => item.toLowerCase().indexOf(value.toLowerCase()) === 0);
+              return items.filter((item) => item.toLowerCase().indexOf(value.toLowerCase()) === 0);
             }
 
             function getDataDefer(callback, value) {
               if (!countries.length) {
                 var xhr = new XMLHttpRequest();
-                xhr.onload = function() {
+                xhr.onload = function () {
                   countries = JSON.parse(xhr.responseText);
                   setTimeout(() => callback(filterByValue(countries, value)), 1000);
                 };
@@ -106,10 +102,10 @@
 
             window.addEventListener('WebComponentsReady', () => {
               const autocompleteElement = document.querySelector('#demo2');
-              autocompleteElement.addEventListener('value-changed', ev => {
+              autocompleteElement.addEventListener('value-changed', (ev) => {
                 if (ev.detail.value.length > 0) {
                   autocompleteElement.loading = true;
-                  getDataDefer(res => {
+                  getDataDefer((res) => {
                     autocompleteElement.options = res;
                     autocompleteElement.loading = false;
                   }, ev.detail.value);
