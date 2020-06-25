@@ -143,6 +143,11 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
               type: String,
             },
 
+            caseSensitive: {
+              type: Boolean,
+              value: false
+            },
+
             _limitedOptions: {
               type: Array,
             },
@@ -300,6 +305,10 @@ See <a href="https://vaadin.com/license/cval-3">the website</a> for the complete
         }
 
         _getValueIndex(value, option) {
+          if (!this.caseSensitive) {
+            value = value.toLowerCase();
+            option = option.toLowerCase();
+          }
           return option.indexOf(value) >= 0 ? option.indexOf(value) : 0;
         }
 
