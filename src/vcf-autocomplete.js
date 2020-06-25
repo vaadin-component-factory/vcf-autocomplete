@@ -102,7 +102,7 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(mixinBehaviors([IronRes
   }
 
   static get version() {
-    return '1.2.2';
+    return '1.2.3';
   }
 
   static get properties() {
@@ -142,6 +142,11 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(mixinBehaviors([IronRes
 
       placeholder: {
         type: String
+      },
+
+      caseSensitive: {
+        type: Boolean,
+        value: false
       },
 
       _limitedOptions: {
@@ -301,6 +306,10 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(mixinBehaviors([IronRes
   }
 
   _getValueIndex(value, option) {
+    if (!this.caseSensitive) {
+      value = value.toLowerCase();
+      option = option.toLowerCase();
+    }
     return option.indexOf(value) >= 0 ? option.indexOf(value) : 0;
   }
 
