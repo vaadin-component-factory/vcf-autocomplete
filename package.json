@@ -1,6 +1,6 @@
 {
   "name": "@vaadin-component-factory/vcf-autocomplete",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Web Component with a text input that provides a panel of suggested options.",
   "main": "theme/lumo/vcf-autocomplete.js",
   "author": "Vaadin Ltd",
