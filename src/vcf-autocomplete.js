@@ -61,7 +61,7 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(mixinBehaviors([IronRes
         }
       </style>
 
-      <vaadin-text-field id="textField" on-focus="_textFieldFocused" label="[[label]]" placeholder="[[placeholder]]">
+      <vaadin-text-field id="textField" on-focus="_textFieldFocused" label="[[label]]" placeholder="[[placeholder]]" theme$="[[theme]]">
         <template is="dom-if" if="[[_hasValue(value)]]">
           <vaadin-button part="clear" theme="icon tertiary small" aria-label="Add new item" slot="suffix" on-click="clear">
             <iron-icon icon="lumo:cross"> </iron-icon>
@@ -69,7 +69,7 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(mixinBehaviors([IronRes
         </template>
       </vaadin-text-field>
 
-      <vcf-autocomplete-overlay opened="{{opened}}">
+      <vcf-autocomplete-overlay opened="{{opened}} theme$="[[theme]]"">
         <template>
           <vaadin-list-box part="options-container">
             <template is="dom-if" if="[[!loading]]">
