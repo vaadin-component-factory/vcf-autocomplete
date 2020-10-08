@@ -69,7 +69,7 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(mixinBehaviors([IronRes
         </template>
       </vaadin-text-field>
 
-      <vcf-autocomplete-overlay opened="{{opened}} theme$="[[theme]]"">
+      <vcf-autocomplete-overlay opened="{{opened}} theme$="[[theme]]">
         <template>
           <vaadin-list-box part="options-container">
             <template is="dom-if" if="[[!loading]]">
