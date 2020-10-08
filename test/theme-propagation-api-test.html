@@ -1,0 +1,34 @@
+<!doctype html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>vcf-autocomplete tests</title>
+  <script src="../../web-component-tester/browser.js"></script>
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../../test-fixture/test-fixture.html">
+  <link rel="import" href="../vcf-autocomplete.html">
+</head>
+
+<body>
+  <test-fixture id="default">
+    <template>
+      <vcf-autocomplete theme="foo"></vcf-autocomplete>
+    </template>
+  </test-fixture>
+
+  <script>
+    describe('theme attribute', () => {
+      let autocompleteElement;
+
+      beforeEach(() => { autocompleteElement = fixture('default'); });
+
+      it('should propagate theme attribute to vaadin-text-field', () => {
+        expect(autocompleteElement.$.textField.getAttribute('theme')).to.equal('foo');
+      });
+
+      it('should propagate theme attribute to overlay', () => {
+        expect(autocompleteElement.$.overlay.getAttribute('theme')).to.equal('foo');
+      });
+    });
+  </script>
+</body>
