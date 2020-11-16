@@ -1,9 +1,17 @@
-/**
- * @license
- * Copyright (C) 2015 Vaadin Ltd.
- * This program is available under Commercial Vaadin Add-On License 3.0 (CVALv3).
- * See the file LICENSE.md distributed with this software for more information about licensing.
- * See [the website]{@link https://vaadin.com/license/cval-3} for the complete license.
+/*
+ * Copyright 2000-2020 Vaadin Ltd.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 import { html, PolymerElement } from '@polymer/polymer/polymer-element';
@@ -11,7 +19,6 @@ import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 import { ThemableMixin } from '@vaadin/vaadin-themable-mixin';
 import { ElementMixin } from '@vaadin/vaadin-element-mixin';
 import { IronResizableBehavior } from '@polymer/iron-resizable-behavior';
-import '@vaadin/vaadin-license-checker/vaadin-license-checker';
 import '@vaadin/vaadin-text-field';
 import '@vaadin/vaadin-list-box';
 import '@vaadin/vaadin-item';
@@ -170,12 +177,6 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(mixinBehaviors([IronRes
    */
   static _finalizeClass() {
     super._finalizeClass();
-
-    const devModeCallback = window.Vaadin.developmentModeCallback;
-    const licenseChecker = devModeCallback && devModeCallback['vaadin-license-checker'];
-    if (typeof licenseChecker === 'function') {
-      licenseChecker(VcfAutocomplete);
-    }
   }
 
   static get observers() {
