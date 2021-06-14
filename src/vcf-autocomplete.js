@@ -109,7 +109,7 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(mixinBehaviors([IronRes
   }
 
   static get version() {
-    return '1.2.3';
+    return '1.2.8';
   }
 
   static get properties() {
