@@ -17,12 +17,12 @@
 import { html, PolymerElement } from '@polymer/polymer/polymer-element';
 import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
 import { ThemableMixin } from '@vaadin/vaadin-themable-mixin';
-import { ElementMixin } from '@vaadin/vaadin-element-mixin';
+import { ElementMixin } from '@vaadin/component-base';
 import { IronResizableBehavior } from '@polymer/iron-resizable-behavior';
-import '@vaadin/vaadin-text-field';
-import '@vaadin/vaadin-list-box';
-import '@vaadin/vaadin-item';
-import '@vaadin/vaadin-button';
+import '@vaadin/text-field';
+import '@vaadin/list-box';
+import '@vaadin/item';
+import '@vaadin/button';
 import '@vaadin/vaadin-lumo-styles/icons';
 import '@polymer/iron-icon';
 import './vcf-autocomplete-overlay';
@@ -203,7 +203,7 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(mixinBehaviors([IronRes
     this.addEventListener('click', this._elementClickListener);
     this.addEventListener('keydown', this._onKeyDown.bind(this));
     this._overlayElement = this.shadowRoot.querySelector('vcf-autocomplete-overlay');
-    this._optionsContainer = this._overlayElement.content.querySelector('vaadin-list-box');
+    this._optionsContainer = this._overlayElement.$.content.querySelector('vaadin-list-box');
 
     this._overlayElement.addEventListener('vaadin-overlay-outside-click', ev => ev.preventDefault());
   }

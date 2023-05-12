@@ -6,8 +6,10 @@
  * See [the website]{@link https://vaadin.com/license/cval-3} for the complete license.
  */
 
+import '@vaadin/polymer-legacy-adapter/template-renderer.js';
+
 import { registerStyles, css } from '@vaadin/vaadin-themable-mixin/register-styles.js';
-import { OverlayElement } from '@vaadin/vaadin-overlay/src/vaadin-overlay';
+import { Overlay as OverlayElement } from '@vaadin/overlay';
 
 registerStyles(
   'vcf-autocomplete-overlay',
