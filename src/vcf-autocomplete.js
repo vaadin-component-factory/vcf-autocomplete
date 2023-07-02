@@ -14,18 +14,31 @@
  * the License.
  */
 
-import { html, PolymerElement } from '@polymer/polymer/polymer-element';
-import { mixinBehaviors } from '@polymer/polymer/lib/legacy/class.js';
+import { html, LitElement } from 'lit';
+import { registerStyles, css } from '@vaadin/vaadin-themable-mixin/register-styles.js';
+import { map } from 'lit/directives/map.js';
 import { ThemableMixin } from '@vaadin/vaadin-themable-mixin';
-import { ElementMixin } from '@vaadin/vaadin-element-mixin';
-import { IronResizableBehavior } from '@polymer/iron-resizable-behavior';
-import '@vaadin/vaadin-text-field';
-import '@vaadin/vaadin-list-box';
-import '@vaadin/vaadin-item';
-import '@vaadin/vaadin-button';
-import '@vaadin/vaadin-lumo-styles/icons';
-import '@polymer/iron-icon';
+import { PolylitMixin } from '@vaadin/component-base/src/polylit-mixin.js';
+import { ElementMixin } from "@vaadin/component-base";
+import { ResizeController } from '@lit-labs/observers/resize-controller.js'
+import '@vaadin/text-field';
+import '@vaadin/list-box';
+import '@vaadin/item';
+import '@vaadin/button';
+import '@vaadin/icon';
+import '@vaadin/vaadin-lumo-styles/vaadin-iconset.js';
+import '@vaadin/icons';
 import './vcf-autocomplete-overlay';
+
+
+registerStyles(
+    'vaadin-item',
+    css`
+    :host(.vcf-autocomplete-no-checkmark) [part="checkmark"] {
+      visibility: hidden;
+    }
+  `
+);
 
 /**
  * `<vcf-autocomplete>` Web Component with a text input that provides a panel of suggested options.
@@ -39,68 +52,56 @@ import './vcf-autocomplete-overlay';
  * @mixes ThemableMixin
  * @demo demo/index.html
  */
-class VcfAutocomplete extends ElementMixin(ThemableMixin(mixinBehaviors([IronResizableBehavior], PolymerElement))) {
-  static get template() {
+class VcfAutocomplete extends ElementMixin(ThemableMixin(PolylitMixin(LitElement))) {
+  render() {
     return html`
-      <style>
-        :host {
-          display: inline-block;
-        }
+          <style>
+            :host {
+              display: inline-block;
+            }
+    
+            :host([opened]) {
+              pointer-events: auto;
+            }
+          </style>
 
-        :host([opened]) {
-          pointer-events: auto;
-        }
+          <vaadin-text-field id="textField" @focus="${this._textFieldFocused}" .label="${this.label}" 
+                             .placeholder="${this.placeholder}" theme="${this._theme}">
+            ${this._hasValue(this.value) ? html`
+                <vaadin-button part="clear" theme="icon tertiary small" aria-label="Add new item" slot="suffix" @click="${this.clear}">
+                    <vaadin-icon icon="lumo:cross"> </vaadin-icon>
+                </vaadin-button>  
+            ` : ''}
+          </vaadin-text-field>
 
-        [part='options-container'] {
-          min-width: var(--vcf-autocomplete-options-width);
-        }
-
-        [part='bold'] {
-          font-weight: 600;
-        }
-
-        [part='loading-indicator']::after {
-          content: 'Loading...';
-        }
-
-        [part='no-results']::after {
-          content: 'No results';
-        }
-      </style>
-
-      <vaadin-text-field id="textField" on-focus="_textFieldFocused" label="[[label]]" placeholder="[[placeholder]]" theme$="[[theme]]">
-        <template is="dom-if" if="[[_hasValue(value)]]">
-          <vaadin-button part="clear" theme="icon tertiary small" aria-label="Add new item" slot="suffix" on-click="clear">
-            <iron-icon icon="lumo:cross"> </iron-icon>
-          </vaadin-button>
-        </template>
-      </vaadin-text-field>
-
-      <vcf-autocomplete-overlay opened="{{opened}}" theme$="[[theme]]">
-        <template>
-          <vaadin-list-box part="options-container">
-            <template is="dom-if" if="[[!loading]]">
-              <template is="dom-repeat" items="[[_limitedOptions]]" as="option">
-                <vaadin-item on-click="_optionClicked" part="option">
-                  [[_getSuggestedStart(value, option)]]<span part="bold">[[_getInputtedPart(value, option)]]</span>[[_getSuggestedEnd(value, option)]]
-                </vaadin-item>
-              </template>
-            </template>
-
-            <template is="dom-if" if="[[_noResultsShown(options, loading)]]">
-              <vaadin-item disabled part="option">
-                <div part="no-results"></div>
-              </vaadin-item>
-            </template>
-
-            <template is="dom-if" if="[[loading]]">
-              <vaadin-item disabled part="option">
-                <div part="loading-indicator"></div>
-              </vaadin-item>
-            </template>
-          </vaadin-list-box>
-        </template>
-      </vcf-autocomplete-overlay>
+          <vcf-autocomplete-overlay .opened="${this.opened}" theme="${this._theme}">
+              <vaadin-list-box part="options-container" theme="${this._theme}">
+                  ${!this.loading ? html`
+                      ${map(this._limitedOptions, (option) => html`
+                          <vaadin-item @click="${this._optionClicked}" part="option" theme="${this._theme}" 
+                                       class="vcf-autocomplete-no-checkmark">
+                              ${this._getSuggestedStart(this.value, option)}
+                              <span part="bold" style="font-weight: 600;">
+                                  ${this._getInputtedPart(this.value, option)}
+                              </span>
+                              ${this._getSuggestedEnd(this.value, option)}
+                          </vaadin-item>
+                      `)}
+                  ` : ''}
+                  
+                  ${this._noResultsShown(this.options, this.loading) ? html`
+                      <vaadin-item disabled part="option">
+                          <div part="no-results">No results</div>
+                      </vaadin-item>
+                  ` : ''}
+                  
+                  ${this.loading ? html`
+                      <vaadin-item disabled part="option">
+                          <div part="loading-indicator">Loading...</div>
+                      </vaadin-item>
+                  ` : ''}
+              </vaadin-list-box>  
+          </vcf-autocomplete-overlay>
     `;
   }
 
@@ -109,7 +110,7 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(mixinBehaviors([IronRes
   }
 
   static get version() {
-    return '1.2.10';
+    return '24.0.0';
   }
 
   static get properties() {
@@ -129,7 +130,8 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(mixinBehaviors([IronRes
 
       options: {
         type: Array,
-        value: () => []
+        value: () => [],
+        observer:'_optionsChange'
       },
 
       limit: {
@@ -166,10 +168,27 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(mixinBehaviors([IronRes
 
       _overlayElement: Object,
       _optionsContainer: Object,
-      _selectedOption: Object,
+      _selectedOption: {
+        type: Object,
+        value: undefined,
+        observer: '_selectedOptionChanged'
+      },
       _boundOutsideClickHandler: Object,
       _boundSetOverlayPosition: Object
     };
+  }
+
+  clear() {
+    this._changeTextFieldValue('');
+    this._applyValue('')
+    this._selectedOptionChanged(null)
+    this.dispatchEvent(
+        new Event('clear', {
+          bubbles: true,
+          cancelable: true
+        })
+    );
+    this._textField.focus();
   }
 
   /**
@@ -179,38 +198,37 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(mixinBehaviors([IronRes
     super._finalizeClass();
   }
 
-  static get observers() {
-    return ['_selectedOptionChanged(_selectedOption)', '_optionsChange(options, options.splices)'];
-  }
-
   constructor() {
     super();
     this._boundSetOverlayPosition = this._setOverlayPosition.bind(this);
     this._boundOutsideClickHandler = this._outsideClickHandler.bind(this);
+    this._resizeController = new ResizeController(this, {
+      target: this,
+      callback: this._boundSetOverlayPosition,
+      skipInitial: true
+    });
   }
 
   connectedCallback() {
     super.connectedCallback();
-
     document.addEventListener('click', this._boundOutsideClickHandler);
   }
 
-  ready() {
+  firstUpdated() {
     super.ready();
 
-    this.$.textField.addEventListener('input', this._onInput.bind(this));
-    this.addEventListener('iron-resize', this._boundSetOverlayPosition);
+    this._textField = this.shadowRoot.getElementById('textField');
+    this._overlayElement = this.shadowRoot.querySelector('vcf-autocomplete-overlay');
+    this._optionsContainer = this._overlayElement.querySelector('vaadin-list-box');
+
+    this._textField.addEventListener('input', this._onInput.bind(this));
     this.addEventListener('click', this._elementClickListener);
     this.addEventListener('keydown', this._onKeyDown.bind(this));
-    this._overlayElement = this.shadowRoot.querySelector('vcf-autocomplete-overlay');
-    this._optionsContainer = this._overlayElement.content.querySelector('vaadin-list-box');
-
     this._overlayElement.addEventListener('vaadin-overlay-outside-click', ev => ev.preventDefault());
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-
     document.removeEventListener('click', this._boundOutsideClickHandler);
   }
 
@@ -219,7 +237,7 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(mixinBehaviors([IronRes
   }
 
   _setOverlayPosition() {
-    const inputRect = this.$.textField.getBoundingClientRect();
+    const inputRect = this._textField.getBoundingClientRect();
 
     this._overlayElement.style.left = inputRect.left + 'px';
     this._overlayElement.style.top = inputRect.bottom + window.pageYOffset + 'px';
@@ -245,22 +263,22 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(mixinBehaviors([IronRes
   }
 
   _optionClicked(ev) {
-    this._applyValue(ev.model.option);
+    this._applyValue(ev.srcElement.value);
   }
 
   _applyValue(value) {
     this.dispatchEvent(
-      new CustomEvent('vcf-autocomplete-value-applied', {
-        bubbles: true,
-        detail: {
-          value: value
-        }
-      })
+        new CustomEvent('vcf-autocomplete-value-applied', {
+          bubbles: true,
+          detail: {
+            value: value
+          }
+        })
     );
 
     this._changeTextFieldValue(value);
     this.opened = false;
-    this.$.textField.blur();
+    this._textField.blur();
   }
 
   _textFieldFocused() {
@@ -270,23 +288,18 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(mixinBehaviors([IronRes
   }
 
   _hasValue(value) {
-    return value.length > 0;
+    return typeof(value) !== 'undefined' && value.length > 0;
   }
 
   _optionsChange(options) {
     this._limitedOptions = options.slice(0, this.limit);
   }
 
-  clear() {
-    this._changeTextFieldValue('');
-    this.$.textField.focus();
-  }
 
   _getSuggestedStart(value, option) {
     if (!value) {
       return;
     }
-
     return option.substr(0, this._getValueIndex(value, option));
   }
 
@@ -294,7 +307,6 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(mixinBehaviors([IronRes
     if (!value) {
       return option;
     }
-
     return option.substr(this._getValueIndex(value, option), value.length);
   }
 
@@ -302,7 +314,6 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(mixinBehaviors([IronRes
     if (!value) {
       return;
     }
-
     return option.substr(this._getValueIndex(value, option) + value.length, option.length);
   }
 
@@ -332,12 +343,12 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(mixinBehaviors([IronRes
         if (this._selectedOption) {
           this._applyValue(this._selectedOption.value);
         } else {
-          this._applyValue(this.$.textField.value);
+          this._applyValue(this._textField.value);
         }
 
         break;
       case 'Escape':
-        this.$.textField.blur();
+        this._textField.blur();
         this.opened = false;
 
         break;
@@ -391,27 +402,27 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(mixinBehaviors([IronRes
       return this._selectedOption.value;
       // or restore the saved value
     } else {
-      this.$.textField.value = this._savedValue;
+      this._textField.value = this._savedValue;
 
       return this._savedValue;
     }
   }
 
   _selectedOptionChanged(selectedOption) {
-    if (!selectedOption) {
+    if (typeof selectedOption === 'undefined' || !selectedOption) {
       return;
     }
 
-    this.$.textField.value = selectedOption.value;
+    this._textField.value = selectedOption.value;
   }
 
   _changeTextFieldValue(newValue) {
-    this.$.textField.value = newValue;
-    this.$.textField.dispatchEvent(
-      new Event('input', {
-        bubbles: true,
-        cancelable: true
-      })
+    this._textField.value = newValue;
+    this._textField.dispatchEvent(
+        new Event('input', {
+          bubbles: true,
+          cancelable: true
+        })
     );
   }
 

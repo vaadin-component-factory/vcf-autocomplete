@@ -7,27 +7,27 @@
  */
 
 import { registerStyles, css } from '@vaadin/vaadin-themable-mixin/register-styles.js';
-import { OverlayElement } from '@vaadin/vaadin-overlay/src/vaadin-overlay';
+import { Overlay } from '@vaadin/overlay/src/vaadin-overlay';
 
 registerStyles(
-  'vcf-autocomplete-overlay',
-  css`
-    :host {
-      align-items: flex-start;
-      justify-content: flex-start;
-      right: auto;
-      position: absolute;
-      bottom: auto;
-      background: #fff;
-    }
+    'vcf-autocomplete-overlay',
+    css`
+      :host {
+        align-items: flex-start;
+        justify-content: flex-start;
+        right: auto;
+        position: absolute;
+        bottom: auto;
+        background: #fff;
+      }
 
-    [part='overlay'] {
-      background-color: var(--lumo-base-color);
-      background-image: linear-gradient(var(--lumo-tint-5pct), var(--lumo-tint-5pct));
-      border-radius: var(--lumo-border-radius);
-      box-shadow: 0 0 0 1px var(--lumo-shade-5pct), var(--lumo-box-shadow-m);
-    }
-  `
+      [part='overlay'] {
+        background-color: var(--lumo-base-color);
+        background-image: linear-gradient(var(--lumo-tint-5pct), var(--lumo-tint-5pct));
+        border-radius: var(--lumo-border-radius);
+        box-shadow: 0 0 0 1px var(--lumo-shade-5pct), var(--lumo-box-shadow-m);
+      }
+    `
 );
 
 /**
@@ -48,7 +48,7 @@ registerStyles(
  * @extends OverlayElement
  * @demo demo/index.html
  */
-class AutocompleteOverlayElement extends OverlayElement {
+class AutocompleteOverlayElement extends Overlay {
   static get is() {
     return 'vcf-autocomplete-overlay';
   }
