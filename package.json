@@ -1,6 +1,6 @@
 {
   "name": "@vaadin-component-factory/vcf-autocomplete",
-  "version": "24.1.1",
+  "version": "24.0.0",
   "type": "module",
   "description": "Web Component with a text input that provides a panel of suggested options.",
   "author": "Vaadin Ltd",
@@ -24,7 +24,7 @@
     "watch": "rollup -c -w",
     "dev": "npm-run-all --parallel start watch",
     "start": "serve public",
-    "publish": "node util/publish.js"
+    "publish": "node util/publish.cjs"
   },
   "husky": {
     "hooks": {
