@@ -46,56 +46,56 @@ import './vcf-autocomplete-overlay';
 registerStyles(
     'vaadin-item',
     css`
-    :host(.vcf-autocomplete-no-checkmark) [part="checkmark"] {
-      visibility: hidden;
-    }
-  `
+        :host(.vcf-autocomplete-no-checkmark) [part="checkmark"] {
+            visibility: hidden;
+        }
+    `
 );
 class VcfAutocomplete extends ElementMixin(ThemableMixin(PolylitMixin(LitElement))) {
     render() {
         return html`
-          <style>
-            :host {
-                display: inline-block;
-            }
-    
-            :host([opened]) {
-                pointer-events: auto;
-            }
-          </style>
+            <style>
+                :host {
+                    display: inline-block;
+                }
 
-          <vaadin-text-field id="textField" @focus="${this._textFieldFocused}" .label="${this.label}" .placeholder="${this.placeholder}" theme="${this._theme}" value="${this.value}" ?readonly="${this.readonly}">
-            ${this._hasValue(this.value) ? html`
-                <vaadin-button part="clear" theme="icon tertiary small" aria-label="Add new item" slot="suffix" @click="${this.clear}">
-                    <vaadin-icon icon="lumo:cross"> </vaadin-icon>
-                </vaadin-button>  
-            ` : ''}
-          </vaadin-text-field>
+                :host([opened]) {
+                    pointer-events: auto;
+                }
+            </style>
 
-          <vcf-autocomplete-overlay .opened="${this.opened}" theme="${this._theme}">
-              <vaadin-list-box part="options-container" theme="${this._theme}">
-                  ${!this.loading ? html`
-                      ${map(this._limitedOptions, (option) => html`
-                          <vaadin-item @click="${this._optionClicked}" part="option" theme="${this._theme}" class="vcf-autocomplete-no-checkmark">
-                              ${this._getSuggestedStart(this.value, option)} <span part="bold" style="font-weight: 600;">${this._getInputtedPart(this.value, option)}</span>${this._getSuggestedEnd(this.value, option)}
-                          </vaadin-item>
-                      `)}
-                  ` : ''}
-                  
-                  ${this._noResultsShown(this.options, this.loading) ? html`
-                      <vaadin-item disabled part="option">
-                          <div part="no-results">No results</div>
-                      </vaadin-item>
-                  ` : ''}
-                  
-                  ${this.loading ? html`
-                      <vaadin-item disabled part="option">
-                          <div part="loading-indicator">Loading...</div>
-                      </vaadin-item>
-                  ` : ''}
-              </vaadin-list-box>  
-          </vcf-autocomplete-overlay>
-    `;
+            <vaadin-text-field id="textField" @focus="${this._textFieldFocused}" .label="${this.label}" .placeholder="${this.placeholder}" theme="${this._theme}" value="${this.value}" ?readonly="${this.readonly}" ?disabled="${!this.enabled}">
+                ${this._hasValue(this.value) && !this.readonly && this.enabled ? html`
+                    <vaadin-button part="clear" theme="icon tertiary small" aria-label="Add new item" slot="suffix" @click="${this.clear}">
+                        <vaadin-icon icon="lumo:cross"> </vaadin-icon>
+                    </vaadin-button>
+                ` : ''}
+            </vaadin-text-field>
+
+            <vcf-autocomplete-overlay .opened="${this.opened}" theme="${this._theme}">
+                <vaadin-list-box part="options-container" theme="${this._theme}">
+                    ${!this.loading ? html`
+                        ${map(this._limitedOptions, (option) => html`
+                            <vaadin-item @click="${this._optionClicked}" part="option" theme="${this._theme}" class="vcf-autocomplete-no-checkmark">
+                                ${this._getSuggestedStart(this.value, option)} <span part="bold" style="font-weight: 600;">${this._getInputtedPart(this.value, option)}</span>${this._getSuggestedEnd(this.value, option)}
+                            </vaadin-item>
+                        `)}
+                    ` : ''}
+
+                    ${this._noResultsShown(this.options, this.loading) ? html`
+                        <vaadin-item disabled part="option">
+                            <div part="no-results">No results</div>
+                        </vaadin-item>
+                    ` : ''}
+
+                    ${this.loading ? html`
+                        <vaadin-item disabled part="option">
+                            <div part="loading-indicator">Loading...</div>
+                        </vaadin-item>
+                    ` : ''}
+                </vaadin-list-box>
+            </vcf-autocomplete-overlay>
+        `;
     }
 
     static get is() {
@@ -167,6 +167,12 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(PolylitMixin(LitElement
             readonly: {
                 type: Boolean,
                 value: false,
+                reflectToAttribute: true
+            },
+
+            enabled: {
+                type: Boolean,
+                value: true,
                 reflectToAttribute: true
             },
 

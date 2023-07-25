@@ -1,6 +1,6 @@
 {
   "name": "@vaadin-component-factory/vcf-autocomplete",
-  "version": "24.1.4",
+  "version": "24.1.5",
   "type": "module",
   "description": "Web Component with a text input that provides a panel of suggested options.",
   "author": "Vaadin Ltd",
