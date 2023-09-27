@@ -52,19 +52,21 @@ registerStyles(
     `
 );
 class VcfAutocomplete extends ElementMixin(ThemableMixin(PolylitMixin(LitElement))) {
+    static get styles() {
+        return css`
+            :host {
+                display: inline-block;
+            }
+
+            :host([opened]) {
+                pointer-events: auto;
+            }
+        `
+    }
+
     render() {
         return html`
-            <style>
-                :host {
-                    display: inline-block;
-                }
-
-                :host([opened]) {
-                    pointer-events: auto;
-                }
-            </style>
-
-            <vaadin-text-field id="textField" @focus="${this._textFieldFocused}" .label="${this.label}" .placeholder="${this.placeholder}" theme="${this._theme}" value="${this.value}" ?readonly="${this.readonly}" ?disabled="${!this.enabled}">
+            <vaadin-text-field part="textfield" id="textField" @focus="${this._textFieldFocused}" .label="${this.label}" .placeholder="${this.placeholder}" theme="${this._theme}" value="${this.value}" ?readonly="${this.readonly}" ?disabled="${!this.enabled}">
                 ${this._hasValue(this.value) && !this.readonly && this.enabled ? html`
                     <vaadin-button part="clear" theme="icon tertiary small" aria-label="Add new item" slot="suffix" @click="${this.clear}">
                         <vaadin-icon icon="lumo:cross"> </vaadin-icon>
@@ -89,7 +91,7 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(PolylitMixin(LitElement
                     ` : ''}
 
                     ${this.loading ? html`
-                        <vaadin-item disabled part="option">
+                        <vaadin-item part="loading" disabled part="option">
                             <div part="loading-indicator">Loading...</div>
                         </vaadin-item>
                     ` : ''}
