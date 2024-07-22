@@ -48,9 +48,9 @@ Add `<vcf-autocomplete>` to the page. In attribute `options` you should declare 
 
 To contribute to the component, please read [the guideline](https://github.com/vaadin/vaadin-core/blob/master/CONTRIBUTING.md) first.
 
-## Vaadin Prime
+## Sponsored Development
 
-This component is available in the Vaadin Prime subscription. It is still open source, but you need to have a valid CVAL license in order to use it. Read more at: https://vaadin.com/pricing
+Major pieces of development of this add-on has been sponsored by multiple customers of Vaadin. Read more about Expert on Demand at: Support and Pricing: https://vaadin.com/pricing
 
 ## License
 
