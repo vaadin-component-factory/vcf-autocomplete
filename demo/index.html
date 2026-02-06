@@ -4,117 +4,126 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes" />
     <title>vcf-autocomplete demo</title>
-    <script dev src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-    <script dev type="module" src="demo.js"></script>
-    <custom-style>
-      <style is="custom-style" include="demo-pages-shared-styles">
-        .centered {
-          max-width: 1000px;
-        }
-        main {
-          opacity: 1;
-          transition: opacity 0.5s;
-        }
-        main.hidden {
-          opacity: 0;
-        }
-      </style>
-    </custom-style>
-    <script>
-      window.addEventListener('WebComponentsReady', () => document.querySelector('main').classList.remove('hidden'));
-    </script>
+    <link rel="stylesheet" href="/node_modules/@vaadin/vaadin-lumo-styles/lumo.css">
+    <style>
+     .centered {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      main {
+        opacity: 1;
+        transition: opacity 0.5s;
+      }
+      main.hidden {
+        opacity: 0;
+      }
+      h3 {
+        padding: 10px;        
+        background-color: #f4f5f6;
+        margin-bottom: 8px;
+      }
+      h3 :first-of-type {
+        margin-top: 20px;
+      }
+      hr {
+        margin-top: 30px;
+      }
+      #api {
+        text-align: right;
+        margin-bottom: 20px;
+      }
+    </style>
+    <script type="module">
+      // import '../theme/lumo/vcf-autocomplete.js';
+    </script>   
   </head>
   <body>
-    <main class="vertical-section-container centered hidden">
-      <h4><a href="api/#/elements/Vaadin.VcfAutocomplete">API documentation ↗</a></h4>
+    <main class="centered hidden">
 
-      <h3>Demo sample</h3>
-      <demo-snippet>
-        <template>
-          <vcf-autocomplete id="demo1" label="Choose country" placeholder="Start typing a country name..."> </vcf-autocomplete>
+      <h4 id="api"><a href="../#/elements/vcf-autocomplete">API documentation ↗</a></h4>
 
-          <div>
-            Last applied value:
-            <span id="lastAppliedValue">
-              None
-            </span>
-          </div>
+      <h3>Autocomplete - Basic Demo</h3>
+      <vcf-autocomplete id="demo1" label="Choose country" placeholder="Start typing a country name..."> </vcf-autocomplete>
 
-          <script>
-            function getData(callback) {
-              var xhr = new XMLHttpRequest();
-              xhr.onload = function () {
-                callback(JSON.parse(xhr.responseText));
-              };
-              var url = 'https://demo.vaadin.com/demo-data/1.0/countries';
-              xhr.open('GET', url, true);
-              xhr.send();
-            }
+      <div>
+        Last applied value:
+        <span id="lastAppliedValue">
+          None
+        </span>
+      </div>
 
-            window.addEventListener('WebComponentsReady', () => {
-              const autocompleteElement = document.querySelector('#demo1');
-              let countries = [];
+      <script>
+        function getData(callback) {
+          var xhr = new XMLHttpRequest();
+          xhr.onload = function () {
+            callback(JSON.parse(xhr.responseText));
+          };
+          var url = 'https://demo.vaadin.com/demo-data/1.0/countries';
+          xhr.open('GET', url, true);
+          xhr.send();
+        }
+      </script>
 
-              getData((result) => {
-                countries = result;
-              });
+      <hr>   
+      <h3>Autocomplete - Slow API Demo</h3>
+      <vcf-autocomplete id="demo2" label="Choose country" placeholder="Start typing a country name..."> </vcf-autocomplete>
 
-              autocompleteElement.addEventListener('value-changed', (ev) => {
-                if (countries.length) {
-                  autocompleteElement.options = countries.filter((country) => country.toLowerCase().indexOf(ev.detail.value.toLowerCase()) >= 0);
-                }
-              });
+      <script>
+        let countriesDemo2 = [];
 
-              autocompleteElement.addEventListener('vcf-autocomplete-value-applied', (ev) => {
-                document.getElementById('lastAppliedValue').textContent = ev.detail.value;
-              });
-            });
-          </script>
-        </template>
-      </demo-snippet>
+        function filterByValue(items, value) {
+          return items.filter((item) => item.toLowerCase().indexOf(value.toLowerCase()) === 0);
+        }
 
-      <h3>Slow API demo</h3>
-      <demo-snippet>
-        <template>
-          <vcf-autocomplete id="demo2" label="Choose country" placeholder="Start typing a country name..."> </vcf-autocomplete>
-
-          <script>
-            let countries = [];
-
-            function filterByValue(items, value) {
-              return items.filter((item) => item.toLowerCase().indexOf(value.toLowerCase()) === 0);
-            }
-
-            function getDataDefer(callback, value) {
-              if (!countries.length) {
-                var xhr = new XMLHttpRequest();
-                xhr.onload = function () {
-                  countries = JSON.parse(xhr.responseText);
-                  setTimeout(() => callback(filterByValue(countries, value)), 1000);
-                };
-                var url = 'https://demo.vaadin.com/demo-data/1.0/countries';
-                xhr.open('GET', url, true);
-                xhr.send();
-              } else {
-                setTimeout(() => callback(filterByValue(countries, value)), 500);
-              }
-            }
-
-            window.addEventListener('WebComponentsReady', () => {
-              const autocompleteElement = document.querySelector('#demo2');
-              autocompleteElement.addEventListener('value-changed', (ev) => {
-                if (ev.detail.value.length > 0) {
-                  autocompleteElement.loading = true;
-                  getDataDefer((res) => {
-                    autocompleteElement.options = res;
-                    autocompleteElement.loading = false;
-                  }, ev.detail.value);
-                }
-              });
-            });
-          </script>
-        </template>
-      </demo-snippet>
+        function getDataDefer(callback, value) {
+          if (!countriesDemo2.length) {
+            var xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+              countriesDemo2 = JSON.parse(xhr.responseText);
+              setTimeout(() => callback(filterByValue(countriesDemo2, value)), 1000);
+            };
+            var url = 'https://demo.vaadin.com/demo-data/1.0/countries';
+            xhr.open('GET', url, true);
+            xhr.send();
+          } else {
+            setTimeout(() => callback(filterByValue(countriesDemo2, value)), 500);
+          }
+        }
+      </script>
     </main>
+
+    <script type="module">
+      document.querySelector('main').classList.remove('hidden');
+
+      const autocompleteElementDemo1 = document.querySelector('#demo1');
+      let countriesDemo1 = [];
+
+      getData((result) => {
+        countriesDemo2 = result;
+      });
+
+      autocompleteElementDemo1.addEventListener('value-changed', (ev) => {
+        if (countriesDemo2.length) {
+          autocompleteElementDemo1.options = countriesDemo2.filter((country) => country.toLowerCase().indexOf(ev.detail.value.toLowerCase()) >= 0);
+        }
+      });
+
+      autocompleteElementDemo1.addEventListener('vcf-autocomplete-value-applied', (ev) => {
+        document.getElementById('lastAppliedValue').textContent = ev.detail.value;
+      });
+
+      const autocompleteElementDemo2 = document.querySelector('#demo2');
+      autocompleteElementDemo2.addEventListener('value-changed', (ev) => {
+        if (ev.detail.value.length > 0) {
+          autocompleteElementDemo2.loading = true;
+          getDataDefer((res) => {
+            autocompleteElementDemo2.options = res;
+            autocompleteElementDemo2.loading = false;
+          }, ev.detail.value);
+        }
+      });
+    </script>
+
   </body>
 </html>
