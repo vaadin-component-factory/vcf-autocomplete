@@ -105,7 +105,7 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(PolylitMixin(LitElement
     }
 
     static get version() {
-        return '1.2.10';
+        return '3.0.0';
     }
 
     static get properties() {
@@ -239,7 +239,7 @@ class VcfAutocomplete extends ElementMixin(ThemableMixin(PolylitMixin(LitElement
         this._overlayElement.style.left = inputRect.left + 'px';
         this._overlayElement.style.top = inputRect.bottom + window.pageYOffset + 'px';
 
-        this._overlayElement.updateStyles({ '--vcf-autocomplete-options-width': inputRect.width + 'px' });
+        this._overlayElement.style.setProperty('--vcf-autocomplete-options-width', inputRect.width + 'px');
     }
 
     _outsideClickHandler() {

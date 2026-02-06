@@ -3,13 +3,23 @@
 [![npm version](https://badgen.net/npm/v/@vaadin-component-factory/vcf-autocomplete)](https://www.npmjs.com/package/@vaadin-component-factory/vcf-autocomplete)
 [![Published on Vaadin Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/vaadin-component-factoryvcf-autocomplete)
 
-This is the npm version [vcf-autocomplete](https://github.com/vaadin-component-factory/vcf-autocomplete) developed using Polymer 3.
+This is the npm version [vcf-autocomplete](https://github.com/vaadin-component-factory/vcf-autocomplete) developed using Lit.
 
 [Live demo ↗](https://vcf-autocomplete.netlify.com)
 |
 [API documentation ↗](https://vcf-autocomplete.netlify.com/api/#/elements/Vaadin.VcfAutocomplete)
 
 ![screenshot](https://user-images.githubusercontent.com/3392815/67003977-ea44cd80-f0e7-11e9-971c-175bdc31407c.gif)
+
+## Important information about versioning
+
+Earlier releases used the Vaadin major version as the component major version (for example, `24.x`), which does not follow Semantic Versioning guidelines.
+
+As part of restoring a proper semantic versioning scheme:
+
+- The existing `24.x` web component version should be considered as version **2.x**.
+- If any fixes or adjustments are needed for that version, they will be released as **2.x** (not `24.x`).
+- New development for Vaadin 25 continues in the **3.x** major line.
 
 ## Installation
 
@@ -47,10 +57,6 @@ Add `<vcf-autocomplete>` to the page. In attribute `options` you should declare 
 ## Contributing
 
 To contribute to the component, please read [the guideline](https://github.com/vaadin/vaadin-core/blob/master/CONTRIBUTING.md) first.
-
-## Vaadin Prime
-
-This component is available in the Vaadin Prime subscription. It is still open source, but you need to have a valid CVAL license in order to use it. Read more at: https://vaadin.com/pricing
 
 ## License
 
